@@ -13,6 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/register', function () {
+    return view('pages.register-v3');
+});
+
+Route::prefix('app')->group(function (){
+   Route::get('/',function (){
+       return view('pages.dashboard-v3');
+   });
+
+    Route::get('/login',function (){
+        return view('pages.login-v1');
+    });
+
+    Route::get('/404',function (){
+        return view('pages.landing.404');
+    });
 });
