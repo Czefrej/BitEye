@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,9 +30,7 @@ Route::prefix('app')->group(function (){
             return view('pages.offers');
         });
 
-        Route::get('/{id}', function () {
-            return view('pages.offers');
-        });
+        Route::get('/{id}', 'App\Http\Controllers\OfferController@show');
     });
     Route::get('/login',function (){
         return view('pages.login-v1');

@@ -15,7 +15,7 @@
 			<span class="icon-bar"></span>
 		</button>
 		@endif
-		<a href="index.html" class="navbar-brand"><span class="navbar-logo"></span> <b>Color</b> Admin</a>
+		<a href="index.html" class="navbar-brand"><span class="navbar-logo"></span> <b>Bit</b> Eye</a>
 		@if ($headerMegaMenu)
 			<button type="button" class="navbar-toggle pt-0 pb-0 mr-0" data-toggle="collapse" data-target="#top-navbar">
 				<span class="fa-stack fa-lg text-inverse">
