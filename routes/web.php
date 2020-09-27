@@ -18,10 +18,21 @@ Route::get('/register', function () {
 });
 
 Route::prefix('app')->group(function (){
-   Route::get('/',function (){
-       return view('pages.dashboard-v3');
-   });
 
+    Route::get('/',function (){
+        return view('pages.dashboard-v3');
+    });
+
+    Route::prefix('offer')->group(function () {
+
+        Route::get('/', function () {
+            return view('pages.offers');
+        });
+
+        Route::get('/{id}', function () {
+            return view('pages.offers');
+        });
+    });
     Route::get('/login',function (){
         return view('pages.login-v1');
     });
