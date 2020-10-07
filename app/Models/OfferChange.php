@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OfferChange extends Model
 {
     use HasFactory;
+    protected $connection = "mysql-tradedata";
     protected $table = "offer_change";
     protected $primaryKey = "id";
     public $timestamps = false;

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+    protected $connection = "mysql-tradedata";
     protected $table = "category";
     protected $primaryKey = "id";
 

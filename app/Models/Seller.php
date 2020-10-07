@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Seller extends Model
 {
     use HasFactory;
+    protected $connection = "mysql-tradedata";
     protected $table = "seller";
     protected $primaryKey = "id";
     public $incrementing = false;

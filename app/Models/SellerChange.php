@@ -9,6 +9,7 @@ class SellerChange extends Model
 {
     use HasFactory;
     use HasFactory;
+    protected $connection = "mysql-tradedata";
     protected $table = "seller_change";
     protected $primaryKey = "id";
     public $timestamps = false;

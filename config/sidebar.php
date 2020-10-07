@@ -29,7 +29,7 @@ return [
   ],[
       'icon' => 'fa fa-hdd',
       'title' => 'Aukcje',
-      'url' => '/app/offers'
+      'url' => '/app/offer'
   ],[
 		'icon' => 'fa fa-user',
 		'title' => 'Sprzedawcy',

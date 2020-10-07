@@ -1,7 +1,7 @@
 @php
 	$headerClass = (!empty($headerInverse)) ? 'navbar-inverse ' : 'navbar-default ';
 	$headerMenu = (!empty($headerMenu)) ? $headerMenu : '';
-	$headerMegaMenu = (!empty($headerMegaMenu)) ? $headerMegaMenu : ''; 
+	$headerMegaMenu = (!empty($headerMegaMenu)) ? $headerMegaMenu : '';
 	$headerTopMenu = (!empty($headerTopMenu)) ? $headerTopMenu : '';
 @endphp
 <!-- begin #header -->
@@ -15,7 +15,7 @@
 			<span class="icon-bar"></span>
 		</button>
 		@endif
-		<a href="index.html" class="navbar-brand"><span class="navbar-logo"></span> <b>Bit</b> Eye</a>
+        <a href="index.html" class="navbar-brand"><span class="navbar-logo"><img height="70" src="/assets/biteye.svg"></span></a>
 		@if ($headerMegaMenu)
 			<button type="button" class="navbar-toggle pt-0 pb-0 mr-0" data-toggle="collapse" data-target="#top-navbar">
 				<span class="fa-stack fa-lg text-inverse">
@@ -48,15 +48,17 @@
 		@endif
 	</div>
 	<!-- end navbar-header -->
-	
+
 	@includeWhen($headerMegaMenu, 'includes.header-mega-menu')
-	
+
+
 	<!-- begin header-nav -->
 	<ul class="navbar-nav navbar-right">
 		@isset($headerLanguageBar)
 		<li class="dropdown navbar-language">
 			<a href="#" class="dropdown-toggle pr-1 pl-1 pr-sm-3 pl-sm-3" data-toggle="dropdown">
 				<span class="flag-icon flag-icon-us" title="us"></span>
+
 				<span class="name d-none d-sm-inline">EN</span> <b class="caret"></b>
 			</a>
 			<div class="dropdown-menu">
@@ -79,7 +81,7 @@
 				<a href="javascript:;" class="dropdown-item">Calendar</a>
 				<a href="javascript:;" class="dropdown-item">Setting</a>
 				<div class="dropdown-divider"></div>
-				<a href="javascript:;" class="dropdown-item">Log Out</a>
+				<a href="{{ route('logout') }}" class="dropdown-item">Log Out</a>
 			</div>
 		</li>
 		@if($sidebarTwo)

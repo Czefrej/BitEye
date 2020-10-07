@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Offer extends Model
 {
     use HasFactory;
+    protected $connection = "mysql-tradedata";
     protected $table = "offer";
     protected $primaryKey = "id";
     protected $keyType = "bigint";
