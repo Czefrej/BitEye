@@ -1,8 +1,9 @@
 <?php
 
+use App\Mail\TestAmazonSes;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
-
+use Illuminate\Support\Facades\Mail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,7 +22,7 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth']],function (){
 
     Route::get('/',function (){
         return view('pages.dashboard-v3');
-    });
+    })->name("app");
 
     Route::prefix('offer')->group(function () {
 
@@ -30,9 +31,6 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth']],function (){
         });
 
         Route::get('/{id}', 'App\Http\Controllers\OfferController@show');
-    });
-    Route::get('/login',function (){
-        return view('pages.login-v1');
     });
 
     Route::get('/404',function (){
@@ -46,16 +44,29 @@ Route::get('/input',function (){
 });
 
 Route::post('/save', 'App\Http\Controllers\APIController@store');
+Route::get('test', function () {
+    Mail::to('wiktor.jeffery@gmail.com')->send(new TestAmazonSes('It works!'));
+});
 
 // Authentication Routes...
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('login', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'App\Http\Controllers\Auth\LoginController@login');
+Route::post('logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 // Registration Routes...
 Route::get('register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'App\Http\Controllers\Auth\RegisterController@register');
 
+
+Route::get('email/verify', 'App\Http\Controllers\Auth\VerificationController@show')->name('verification.notice');
+Route::get('email/resend', 'App\Http\Controllers\Auth\VerificationController@resend')->name('verification.resend');
+Route::post('email/resend', 'App\Http\Controllers\Auth\VerificationController@resend')->name('verification.resend');
+Route::get('email/verify', 'App\Http\Controllers\Auth\VerificationController@show')->name('verification.notice');
+Route::get('email/verify/{id}/{hash}', 'App\Http\Controllers\Auth\VerificationController@verify')->name('verification.verify'); // v6.x
+
+Route::get('verify',function (){
+   return view('auth.verify-new');
+});
 /*
 // Password Reset Routes...
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -66,6 +77,8 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 // Confirm Password (added in v6.2)
 Route::get('password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
 Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm');
+
+
 
 // Email Verification Routes...
 Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');

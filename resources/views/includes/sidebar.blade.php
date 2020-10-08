@@ -1,6 +1,7 @@
 @php
 	$sidebarClass = (!empty($sidebarTransparent)) ? 'sidebar-transparent' : '';
 @endphp
+
 <!-- begin #sidebar -->
 <div id="sidebar" class="sidebar {{ $sidebarClass }}">
 	<!-- begin sidebar scrollbar -->
@@ -11,13 +12,10 @@
 			<li class="nav-profile">
 				<a href="javascript:;" data-toggle="nav-profile">
 					<div class="cover with-shadow"></div>
-					<div class="image">
-						<img src="/assets/img/user/user-13.jpg" alt="" />
-					</div>
 					<div class="info">
 						<b class="caret pull-right"></b>
-						Sean Ngu
-						<small>Front end developer</small>
+                        {{ Auth::user()->name }}
+                        <small>{{ Auth::user()->type }} @if(Auth::user()->type == "free")- ulepsz @endif</small>
 					</div>
 				</a>
 			</li>
@@ -41,7 +39,7 @@
 			<li class="nav-header">Navigation</li>
 			@php
 				$currentUrl = (Request::path() != '/') ? '/'. Request::path() : '/';
-				
+
 				function renderSubMenu($value, $currentUrl) {
 					$subMenu = '';
 					$GLOBALS['sub_level'] += 1 ;
@@ -49,21 +47,21 @@
 					$currentLevel = $GLOBALS['sub_level'];
 					foreach ($value as $key => $menu) {
 						$GLOBALS['subparent_level'] = '';
-						
+
 						$subSubMenu = '';
 						$hasSub = (!empty($menu['sub_menu'])) ? 'has-sub' : '';
 						$hasCaret = (!empty($menu['sub_menu'])) ? '<b class="caret pull-right"></b>' : '';
 						$hasTitle = (!empty($menu['title'])) ? $menu['title'] : '';
 						$hasHighlight = (!empty($menu['highlight'])) ? '<i class="fa fa-paper-plane text-theme m-l-5"></i>' : '';
-						
+
 						if (!empty($menu['sub_menu'])) {
 							$subSubMenu .= '<ul class="sub-menu">';
 							$subSubMenu .= renderSubMenu($menu['sub_menu'], $currentUrl);
 							$subSubMenu .= '</ul>';
 						}
-						
+
 						$active = ($currentUrl == $menu['url']) ? 'active' : '';
-						
+
 						if ($active) {
 							$GLOBALS['parent_active'] = true;
 							$GLOBALS['active'][$GLOBALS['sub_level'] - 1] = true;
@@ -80,10 +78,10 @@
 					}
 					return $subMenu;
 				}
-				
+
 				foreach (config('sidebar.menu') as $key => $menu) {
 					$GLOBALS['parent_active'] = '';
-					
+
 					$hasSub = (!empty($menu['sub_menu'])) ? 'has-sub' : '';
 					$hasCaret = (!empty($menu['caret'])) ? '<b class="caret"></b>' : '';
 					$hasIcon = (!empty($menu['icon'])) ? '<i class="'. $menu['icon'] .'"></i>' : '';
@@ -91,9 +89,9 @@
 					$hasLabel = (!empty($menu['label'])) ? '<span class="label label-theme m-l-5">'. $menu['label'] .'</span>' : '';
 					$hasTitle = (!empty($menu['title'])) ? '<span>'. $menu['title'] . $hasLabel .'</span>' : '';
 					$hasBadge = (!empty($menu['badge'])) ? '<span class="badge pull-right">'. $menu['badge'] .'</span>' : '';
-					
+
 					$subMenu = '';
-					
+
 					if (!empty($menu['sub_menu'])) {
 						$GLOBALS['sub_level'] = 0;
 						$subMenu .= '<ul class="sub-menu">';

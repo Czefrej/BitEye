@@ -1,4 +1,5 @@
 <?php
+$year = date("Y");
 return [
     'title' => 'Rejestracja',
     'header' => 'Rejestracja',
@@ -11,10 +12,10 @@ return [
     'password-placeholder' => 'Wprowadź hasło',
     'repassword-label' => 'Powtórz hasło',
     'repassword-placeholder' => 'Ponownie wprowadź hasło',
-    'signup' => "Masz już konto? <a href='/login'>Zaloguj</a> się.",
+    'signin' => "Masz już konto? <a href='/login'>Zaloguj</a> się.",
     'signup-button' => 'Rejestracja',
     'tos' => "Klikając Rejestracja, akceptujesz warunki umowy i potwierdzasz znajomość polityki ciasteczek i przetwarzania danych.",
-    'footer' => '© BitEye Wszystkie prawa zastrzeżone 2020',
+    'footer' => "© BitEye Wszelkie prawa zastrzeżone $year",
     'jumbotron'=>'<b>BitEye</b> Aplikacja do Analizy Sprzedaży',
     'jumbotron-description'=>'',
     'error'=>''

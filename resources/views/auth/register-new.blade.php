@@ -1,6 +1,6 @@
 @extends('layouts.empty', ['paceTop' => true, 'bodyExtraClass' => 'bg-white'])
 
-@section('title', 'Register Page')
+@section('title', __('registration-form.title'))
 
 @section('content')
 	<!-- begin register -->
@@ -19,6 +19,12 @@
 		<!-- begin right-content -->
 		<div class="right-content">
 			<!-- begin register-header -->
+            <div class="row m-b-20 text-center d-md-block ">
+                <img class="img-responsive center-block d-block mx-auto" src="{{asset('assets/biteye.svg')}}" alt="logo" height="50px">
+            </div>
+            <div class="row m-b-20 text-center d-xs-none d-sm-none">
+                <img class="img-responsive center-block d-block mx-auto" src="{{asset('assets/biteye.svg')}}" alt="logo" width="200px">
+            </div>
 			<h1 class="register-header">
                 {{__('registration-form.header')}}
 				<small>{{__('registration-form.register-header')}}</small>
@@ -79,10 +85,10 @@
 						<button type="submit" class="btn btn-primary btn-block btn-lg">{{__('registration-form.signup-button')}}</button>
 					</div>
 					<div class="m-t-30 m-b-30 p-b-30">
-                        {!! __('registration-form.signup')!!}
+                        {!! __('registration-form.signin')!!}
 					</div>
 					<hr />
-					<p class="text-center mb-0">
+					<p class="text-center text-grey-darker mb-0">
                         {{__('registration-form.footer')}}
 					</p>
 				</form>

@@ -73,7 +73,7 @@
 		@endisset
 		<li class="dropdown navbar-user">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-				<span class="d-none d-md-inline">Adam Schwartz</span> <b class="caret"></b>
+				<span class="d-none d-md-inline">{{ Auth::user()->name }}</span> <b class="caret"></b>
 			</a>
 			<div class="dropdown-menu dropdown-menu-right">
 				<a href="javascript:;" class="dropdown-item">Edit Profile</a>
@@ -81,7 +81,15 @@
 				<a href="javascript:;" class="dropdown-item">Calendar</a>
 				<a href="javascript:;" class="dropdown-item">Setting</a>
 				<div class="dropdown-divider"></div>
-				<a href="{{ route('logout') }}" class="dropdown-item">Log Out</a>
+                <a class="dropdown-item" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                    Wyloguj
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>\
 			</div>
 		</li>
 		@if($sidebarTwo)

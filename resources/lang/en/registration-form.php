@@ -1,4 +1,5 @@
 <?php
+$year = date("Y");
 return [
     'title'=>'Sign Up',
     'header'=>'Sign Up',
@@ -11,10 +12,10 @@ return [
     'password-placeholder'=>'Enter password',
     'repassword-label'=>'Repeat password',
     'repassword-placeholder'=>'Reenter password',
-    'signup'=>"Already a member? <a href='/login'>Click here</a> to login.",
+    'signin'=>"Already a member? <a href='/login'>Click here</a> to login.",
     'signup-button'=>'Sign Up',
     'tos'=>'By clicking Sign Up, you agree to our Terms and that you have read our Data Policy, including our Cookie Use.',
-    'footer'=>'© BitEye All Right Reserved 2020',
+    'footer'=>"© BitEye All Right Reserved $year",
     'jumbotron'=>'<b>BitEye</b> Trade Analysis Application',
     'jumbotron-description'=>'',
     'error'=>''

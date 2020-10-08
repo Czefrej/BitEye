@@ -36,7 +36,7 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'host' => env('MAIL_HOST', 'email-smtp.eu-central-1.amazonaws.com'),
             'port' => env('MAIL_PORT', 587),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME'),
@@ -47,6 +47,9 @@ return [
 
         'ses' => [
             'transport' => 'ses',
+            'key' => 'your-ses-key',
+            'secret' => 'your-ses-secret',
+            'region' => 'ses-region',  // e.g. us-east-1
         ],
 
         'mailgun' => [
