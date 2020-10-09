@@ -28,9 +28,10 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth']],function (){
 
         Route::get('/', function () {
             return view('pages.offers');
-        });
+        })->name("offer.index");
+        Route::post('/', 'App\Http\Controllers\OfferController@processForm')->name("offer.store");
+        Route::get('/{id}/{fromDate?}/{toDate?}', 'App\Http\Controllers\OfferController@show')->name("offer.show");
 
-        Route::get('/{id}', 'App\Http\Controllers\OfferController@show');
     });
 
     Route::get('/404',function (){

@@ -146,5 +146,6 @@ return [
     */
 
     'attributes' => [
+        "auctionNumber" => "numer aukcji"
     ],
 ];

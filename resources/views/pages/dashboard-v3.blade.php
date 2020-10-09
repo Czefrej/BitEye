@@ -22,7 +22,7 @@
 	<!-- begin daterange-filter -->
 	<div class="d-sm-flex align-items-center mb-3">
 		<a href="#" class="btn btn-inverse mr-2 text-truncate" id="daterange-filter">
-			<i class="fa fa-calendar fa-fw text-white-transparent-5 ml-n1"></i> 
+			<i class="fa fa-calendar fa-fw text-white-transparent-5 ml-n1"></i>
 			<span>1 Jun 2020 - 7 Jun 2020</span>
 			<b class="caret"></b>
 		</a>
@@ -110,7 +110,7 @@
 						<div class="card-body">
 							<!-- begin title -->
 							<div class="mb-3 text-grey">
-								<b class="mb-3">CONVERSION RATE</b> 
+								<b class="mb-3">CONVERSION RATE</b>
 								<span class="ml-2"><i class="fa fa-info-circle" data-toggle="popover" data-trigger="hover" data-title="Conversion Rate" data-placement="top" data-content="Percentage of sessions that resulted in orders from total number of sessions." data-original-title="" title=""></i></span>
 							</div>
 							<!-- end title -->
@@ -177,7 +177,7 @@
 						<div class="card-body">
 							<!-- begin title -->
 							<div class="mb-3 text-grey">
-								<b class="mb-3">STORE SESSIONS</b> 
+								<b class="mb-3">STORE SESSIONS</b>
 								<span class="ml-2"><i class="fa fa-info-circle" data-toggle="popover" data-trigger="hover" data-title="Store Sessions" data-placement="top" data-content="Number of sessions on your online store. A session is a period of continuous activity from a visitor." data-original-title="" title=""></i></span>
 							</div>
 							<!-- end title -->
@@ -612,3 +612,5 @@
 	<script src="/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
 	<script src="/assets/js/demo/dashboard-v3.js"></script>
 @endpush
+
+

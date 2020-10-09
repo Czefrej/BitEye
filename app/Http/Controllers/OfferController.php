@@ -8,8 +8,13 @@ use App\Models\SellerChange;
 use App\Models\OfferChange;
 use App\Models\APICredential;
 use App\Models\Category;
+use App\Services\OfferHistoryService;
+use App\Services\SellerHistoryService;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\MessageBag;
+
 
 class OfferController extends Controller
 {
@@ -51,54 +56,97 @@ class OfferController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function show($id)
+    public function show($id,$fromDate = null, $toDate = null)
     {
-        if($id != null) {
-            try{
-                $offer = Offer::findOrFail($id);
-                #$seller = $offer->seller->changes->selectRaw("(SELECT login FROM seller WHERE login != null ORDER BY creation_date DESC LIMIT 1)")->first();
-                $seller = SellerChange::selectRaw("
-                        (SELECT login FROM seller_change WHERE login is not null AND seller_id = ? ORDER BY creation_date DESC LIMIT 1) as login,
-                        (SELECT super_seller FROM seller_change WHERE super_seller is not null AND seller_id = ? ORDER BY creation_date DESC LIMIT 1) as super_seller,
-                        (SELECT company FROM seller_change WHERE company is not null AND seller_id = ? ORDER BY creation_date DESC LIMIT 1) as company")
-                    ->where('seller_id', "=", "?")
-                    ->setBindings([$offer->seller->id, $offer->seller->id, $offer->seller->id, $offer->seller->id])->first();
+        if($fromDate == null && $toDate == null){
+            $data = array("auctionNumber"=>$id);
+        }else{
+            if($fromDate != null && $toDate != null)
+                $data = array("auctionNumber"=>$id,"daterange"=>$fromDate." - ".$toDate);
+            else{
+                $messageBag = new MessageBag;
+                $messageBag->add(0,__("offer.dateframe-required"));
+                return redirect(route("offer.index"))->with(["errors" => $messageBag]);
+            }
+        }
 
-                $offerDetails = OfferChange::selectRaw("
-                            (SELECT name FROM offer_change WHERE name is not null AND offer_id = ? ORDER BY creation_date DESC LIMIT 1) as name,
-                            (SELECT stock FROM offer_change WHERE stock is not null AND offer_id = ? ORDER BY creation_date DESC LIMIT 1) as stock,
-                            (SELECT transactions FROM offer_change WHERE transactions is not null AND offer_id = ? ORDER BY creation_date DESC LIMIT 1) as transactions,
-                            (SELECT promo_bold FROM offer_change WHERE promo_bold is not null AND offer_id = ? ORDER BY creation_date DESC LIMIT 1) as promo_bold,
-                            (SELECT promo_highlight FROM offer_change WHERE promo_highlight is not null AND offer_id = ? ORDER BY creation_date DESC LIMIT 1) as promo_highlight,
-                            (SELECT promo_emphasized FROM offer_change WHERE promo_emphasized is not null AND offer_id = ? ORDER BY creation_date DESC LIMIT 1) as promo_emphasized,
-                            (SELECT free_delivery FROM offer_change WHERE free_delivery is not null AND offer_id = ? ORDER BY creation_date DESC LIMIT 1) as free_delivery,
-                            (SELECT lowest_delivery_price FROM offer_change WHERE lowest_delivery_price is not null AND offer_id = ? ORDER BY creation_date DESC LIMIT 1) as lowest_delivery_price,
-                            (SELECT price FROM offer_change WHERE price is not null AND offer_id = ? ORDER BY creation_date DESC LIMIT 1) as price,
-                            creation_date")
-                    ->where('offer_id', "=", "?")
-                    ->setBindings([$offer->id, $offer->id, $offer->id, $offer->id, $offer->id, $offer->id, $offer->id, $offer->id, $offer->id, $offer->id])->first();
-                #$seller = $offer->seller->changes->selectRawwhere("login","!=",null)->sortByDesc("creation_date")->first();
-                $category = $offer->category;
-            }catch(ModelNotFoundException $e)
-            {
+        $validator = $this->validator($data);
+        if(!$validator->fails()) {
+            if ($id != null) {
+                try {
+                    $offer = Offer::findOrFail($id);
+                    $category = $offer->category;
+                    #$seller = $offer->seller->changes->selectRaw("(SELECT login FROM seller WHERE login != null ORDER BY creation_date DESC LIMIT 1)")->first();
+                    if($fromDate != null && $toDate != null) {
+                        $offerHistory = $offer->changes->where('creation_date', '>=', "$fromDate")->where('creation_date', '<=', "$toDate");
+//                        $offerHistory = OfferChange::where('offer_id', '=', '?')
+//                            ->where('creation_date', '>=', '?')
+//                            ->where('creation_date', '<=', '?')
+//                            ->setBindings([$id, $fromDate, $toDate])->get();
+
+                        $sellerDetails = SellerHistoryService::getCurrentDetails($offer);
+                        $offerDetails = OfferHistoryService::getCurrentDetails($offer);
+                        return view('pages.offers', ['offer' => $offer, 'seller' => $sellerDetails, 'offerDetails' => $offerDetails, 'category' => $category, 'history' => $offerHistory,'fromDate'=>$fromDate,'toDate'=>$toDate,'priceChartData'=>OfferHistoryService::getPriceChartdata($offerHistory)]);
+                    }else{
+                        $offerHistory = $offer->changes;
+                        $sellerDetails = SellerHistoryService::getCurrentDetails($offer);
+                        $offerDetails = OfferHistoryService::getCurrentDetails($offer);
+                        return view('pages.offers', ['offer' => $offer, 'seller' => $sellerDetails, 'offerDetails' => $offerDetails, 'category' => $category, 'history' => $offerHistory]);
+                    }
+
+                } catch (ModelNotFoundException $e) {
+                    return view('pages.offers');
+                }
+                /*while($category['parent-id'] != 0){
+                    $category = $category->parentCategory;
+                    array_push($categoriesBreadCrumb,$category);
+                    if($i == 2)
+                        break;
+                    $i++;
+                }*/
+            } else {
                 return view('pages.offers');
             }
-            /*while($category['parent-id'] != 0){
-                $category = $category->parentCategory;
-                array_push($categoriesBreadCrumb,$category);
-                if($i == 2)
-                    break;
-                $i++;
-            }*/
-            return view('pages.offers', ['offer' => $offer, 'seller' => $seller, 'offerDetails' => $offerDetails, 'category' => $category]);
         }else{
-            return view('pages.offers');
+            return redirect(route("offer.index"))->withErrors($validator);
         }
         //
     }
 
+    protected function validator(array $data){
+        return Validator::make($data, [
+            'auctionNumber' => ['required', 'numeric', 'digits:10'],
+            'daterange' => ['regex:/[0-9]{4}-[0-9]{2}-[0-9]{2} - [0-9]{4}-[0-9]{2}-[0-9]{2}/']
+        ]);
+    }
+
+    public function processForm(Request $request)
+    {
+        $id = $request->input('auctionNumber');
+        $date = $request->input('daterange');
+
+        $data = array(
+            "auctionNumber" => $id,
+            "daterange" => $date
+        );
+        $validator = $this->validator($data);
+        if (!$validator->fails()) {
+            $daterange = explode(" - ",$date);
+            try {
+                $offer = offer::findorfail($id);
+                return redirect("app/offer/$id/$daterange[0]/$daterange[1]")->withInput();
+
+            } catch (modelnotfoundexception $e) {
+                $validator->getmessagebag()->add("not_found", __("offer.notfound"));
+                return back()->witherrors($validator)->withinput();
+            }
+        } else {
+            return back()->witherrors($validator)->withinput();
+        }
+
+    }
     /**
      * Show the form for editing the specified resource.
      *

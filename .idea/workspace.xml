@@ -20,59 +20,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d83fb2d9-13ae-4b82-8454-9f3b8b0a65c3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/lang/en/404.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/en/login-form.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/en/verification-success.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/pl/404.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/pl/login-form.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/pl/verification-success.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/login-new.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/verify-new.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/errors/404.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/layouts/landing.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/biteye.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/biteye.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Services/OfferHistoryService.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Services/SellerHistoryService.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/en/daterangepicker.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/en/offer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/pl/daterangepicker.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/pl/offer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OfferController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OfferController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/mail.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/mail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/landing/font-awesome.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/landing/font-awesome.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/landing/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/landing/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/img/landing/bg-img/hero-4.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/landing/bg-img/hero-4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/registration-form.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/registration-form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/pl/registration-form.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/pl/registration-form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/old/login.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/register-new.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/register-new.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/includes/head.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/includes/head.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/includes/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/includes/header.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/includes/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/includes/sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/404.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/about-us.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/about-us.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/apland-barisal.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/apland-barisal.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/apland-chattagram.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/apland-chattagram.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/apland-dhaka.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/apland-dhaka.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/apland-khulna.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/apland-khulna.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/apland-mymensingh.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/apland-mymensingh.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/apland-rajshahi.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/apland-rajshahi.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/apland-rangpur.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/apland-rangpur.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/apland-sylhet.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/apland-sylhet.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/blog-card-sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/blog-card-sidebar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/blog-card.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/blog-card.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/blog-details-full.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/blog-details-full.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/blog-details-left-sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/blog-details-left-sidebar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/blog-details-right-sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/blog-details-right-sidebar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/blog-full.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/blog-full.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/blog-left-sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/blog-left-sidebar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/blog-right-sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/blog-right-sidebar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/client-reviews.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/client-reviews.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/contact.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/faq.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/faq.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/landing/pricing-plan.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/landing/pricing-plan.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/validation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/pl/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/pl/validation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/dashboard-v3.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/dashboard-v3.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/offers.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/offers.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -252,7 +213,8 @@
       <updated>1601899509847</updated>
       <workItem from="1601899511590" duration="8023000" />
       <workItem from="1601964858528" duration="32147000" />
-      <workItem from="1602147069692" duration="18340000" />
+      <workItem from="1602147069692" duration="20417000" />
+      <workItem from="1602227903358" duration="32088000" />
     </task>
     <servers />
   </component>
@@ -280,10 +242,10 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="703" y="342" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1858.1080@0.0.1858.1080" timestamp="1601902593270" />
-    <state x="659" y="295" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1602064280711">
+    <state x="659" y="295" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1602248797344">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="659" y="295" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1602064280711" />
+    <state x="659" y="295" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1602248797344" />
     <state width="1249" height="292" key="GridCell.Tab.0.bottom" timestamp="1602153906484">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
@@ -300,10 +262,10 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state width="1249" height="292" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1602153906484" />
-    <state x="763" y="463" key="NewPhpFileDialog" timestamp="1602166740327">
+    <state x="763" y="463" key="NewPhpFileDialog" timestamp="1602248728053">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="763" y="463" key="NewPhpFileDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1602166740327" />
+    <state x="763" y="463" key="NewPhpFileDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1602248728053" />
     <state x="430" y="185" key="SettingsEditor" timestamp="1602074505005">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
@@ -316,13 +278,13 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="772" y="313" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1602078496593" />
-    <state x="585" y="250" key="run.anything.popup" timestamp="1602165652850">
+    <state x="585" y="250" key="run.anything.popup" timestamp="1602244724818">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="585" y="250" key="run.anything.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1602165652850" />
-    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1601965405580">
+    <state x="585" y="250" key="run.anything.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1602244724818" />
+    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1602268716626">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1601965405580" />
+    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1602268716626" />
   </component>
 </project>
