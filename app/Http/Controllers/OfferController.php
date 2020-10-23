@@ -6,6 +6,7 @@ use App\Models\Offer;
 use App\Models\Seller;
 use App\Models\SellerChange;
 use App\Models\OfferChange;
+use Illuminate\Support\Facades\DB;
 use App\Models\APICredential;
 use App\Models\Category;
 use App\Services\OfferHistoryService;
@@ -50,6 +51,7 @@ class OfferController extends Controller
     public function store(Request $request)
     {
         //
+
     }
 
     /**
@@ -78,41 +80,40 @@ class OfferController extends Controller
                 try {
                     $offer = Offer::findOrFail($id);
                     $category = $offer->category;
-                    #$seller = $offer->seller->changes->selectRaw("(SELECT login FROM seller WHERE login != null ORDER BY creation_date DESC LIMIT 1)")->first();
                     if($fromDate != null && $toDate != null) {
-                        $offerHistory = $offer->changes->where('creation_date', '>=', "$fromDate")->where('creation_date', '<=', "$toDate");
-//                        $offerHistory = OfferChange::where('offer_id', '=', '?')
-//                            ->where('creation_date', '>=', '?')
-//                            ->where('creation_date', '<=', '?')
-//                            ->setBindings([$id, $fromDate, $toDate])->get();
+                        $offerHistory = OfferChange::select(["price", "stock", "transactions", "creation_date",DB::raw("Date(creation_date) as creation_day")])
+                            ->where(DB::Raw('DATE(creation_date)'), '>=', "$fromDate")
+                            ->where(DB::Raw('DATE(creation_date)'), '<=', "$toDate")
+                            ->where("offer_id","=","$id")->get();
 
                         $sellerDetails = SellerHistoryService::getCurrentDetails($offer);
                         $offerDetails = OfferHistoryService::getCurrentDetails($offer);
-                        return view('pages.offers', ['offer' => $offer, 'seller' => $sellerDetails, 'offerDetails' => $offerDetails, 'category' => $category, 'history' => $offerHistory,'fromDate'=>$fromDate,'toDate'=>$toDate,'priceChartData'=>OfferHistoryService::getPriceChartdata($offerHistory)]);
+                        return view('pages.offers', ['offer' => $offer,
+                            'seller' => $sellerDetails, 'offerDetails' => $offerDetails,
+                            'category' => $category, 'history' => $offerHistory,
+                            'fromDate'=>$fromDate,'toDate'=>$toDate,
+                            'priceChartData'=>OfferHistoryService::getPriceChartdata($offerHistory),
+                            'transactionsChartData'=>OfferHistoryService::getTransactionsChartdata($offerHistory)]);
                     }else{
                         $offerHistory = $offer->changes;
                         $sellerDetails = SellerHistoryService::getCurrentDetails($offer);
                         $offerDetails = OfferHistoryService::getCurrentDetails($offer);
-                        return view('pages.offers', ['offer' => $offer, 'seller' => $sellerDetails, 'offerDetails' => $offerDetails, 'category' => $category, 'history' => $offerHistory]);
+                        return view(
+                            'pages.offers', ['offer' => $offer,
+                            'seller' => $sellerDetails, 'offerDetails' => $offerDetails,
+                                'category' => $category, 'history' => $offerHistory]);
                     }
 
                 } catch (ModelNotFoundException $e) {
                     return view('pages.offers');
                 }
-                /*while($category['parent-id'] != 0){
-                    $category = $category->parentCategory;
-                    array_push($categoriesBreadCrumb,$category);
-                    if($i == 2)
-                        break;
-                    $i++;
-                }*/
             } else {
                 return view('pages.offers');
             }
         }else{
             return redirect(route("offer.index"))->withErrors($validator);
         }
-        //
+
     }
 
     protected function validator(array $data){
@@ -139,7 +140,7 @@ class OfferController extends Controller
                 return redirect("app/offer/$id/$daterange[0]/$daterange[1]")->withInput();
 
             } catch (modelnotfoundexception $e) {
-                $validator->getmessagebag()->add("not_found", __("offer.notfound"));
+                $validator->getmessagebag()->add("not_found", __("offer.notFound"));
                 return back()->witherrors($validator)->withinput();
             }
         } else {

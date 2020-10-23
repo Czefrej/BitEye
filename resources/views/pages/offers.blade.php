@@ -58,6 +58,7 @@
                             <div class="col-xl-3">
 
                             </div>
+
                             <div class="col-xl-6 text-center m-b-10">
                                 <input class="btn btn-inverse mr-2 text-truncate" type="text" name="daterange" value="" />
                             </div>
@@ -72,7 +73,7 @@
 							</div>
 							<div class="input-group text-center col-xl-6">
 								<div class="input-group-prepend"><span class="input-group-text">https://allegro.pl/oferta/</span></div>
-                                <input type="number" name="auctionNumber" class="form-control" placeholder="Wprowadź numer aukcji" value="{{old('auctionNumber')}}" required autocomplete="auctionNumber">
+                                <input type="number" name="auctionNumber" class="form-control" placeholder="Wprowadź numer aukcji" @if(isset($offer)) value="{{$offer->id}}" @else value="{{old('auctionNumber')}}" @endif required autocomplete="auctionNumber">
 
 							</div>
 							<div class="col-xl-3">
@@ -159,8 +160,9 @@
 
                                             <div class="col-xl-4">
                                                 <div class="text-right f-s-20">
-
-                                                    <i class="fa fa-bullhorn text-gray-lighter" data-toggle="tooltip" data-placement="bottom" title="Promowanie"></i>
+                                                    @if($offerDetails['promoted'])
+                                                        <i class="fa fa-bullhorn" data-toggle="tooltip" data-placement="bottom" title="Promowanie"></i>
+                                                    @endif
                                                     @if($offerDetails['promo_highlight'])
                                                     <i class="fa fa-h-square" data-toggle="tooltip" data-placement="bottom" title="Podświetlenie"></i>
                                                     @endif
@@ -221,25 +223,47 @@
         @endif
 	</div>
     <div class="row">
-        <div class="col-xl-6 ui-sortable">
-            <div class="panel panel-inverse">
-                <div class="panel-heading ui-sortable-handle">
-                    <h4 class="panel-title">Historia cen</h4>
-                    <div class="panel-heading-btn">
-                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
-                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
-                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+        @if(isset($priceChartData))
+            <div class="col-xl-6 php  ui-sortable">
+                <div class="panel panel-inverse">
+                    <div class="panel-heading ui-sortable-handle">
+                        <h4 class="panel-title">Historia aukcji</h4>
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <canvas id="price-chart" data-render="chart-js"></canvas>
+                        </div>
                     </div>
                 </div>
-                <div class="panel-body">
-                    <div>
-                        <canvas id="line-chart" data-render="chart-js"></canvas>
+
+            </div>
+        @endif
+        @if(isset($transactionsChartData))
+            <div class="col-xl-6 php  ui-sortable">
+                <div class="panel panel-inverse">
+                    <div class="panel-heading ui-sortable-handle">
+                        <h4 class="panel-title">Historia sprzedaży</h4>
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <canvas id="transactions-chart" data-render="chart-js"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
-
-        </div>
+        @endif
     </div>
 @endsection
 
@@ -256,34 +280,65 @@
         var randomScalingFactor = function() {
             return Math.round(Math.random()*100)
         };
-        var priceChangeData = @json($priceChartData);
-        var lineChartData = {
-            labels: priceChangeData['datetime'],
-            datasets: [{
-                label: 'Cena',
-                borderColor: COLOR_ORANGE,
-                pointBackgroundColor: COLOR_ORANGE,
-                pointRadius: 2,
-                borderWidth: 2,
-                backgroundColor: COLOR_ORANGE_TRANSPARENT_1,
-                data: priceChangeData['price']
-            }]
-        };
+        @if(isset($priceChartData))
+            var priceChangeData = @json($priceChartData);
+
+            var lineChartData = {
+                labels: priceChangeData['datetime'],
+                datasets: [{
+                    label: 'Cena',
+                    borderColor: COLOR_ORANGE,
+                    pointBackgroundColor: COLOR_ORANGE,
+                    pointRadius: 2,
+                    borderWidth: 2,
+                    backgroundColor: COLOR_ORANGE_TRANSPARENT_1,
+                    data: priceChangeData['price']
+                },{
+                    label: 'Stan magazynowy',
+                    borderColor: COLOR_BLUE,
+                    pointBackgroundColor: COLOR_BLUE,
+                    pointRadius: 2,
+                    borderWidth: 2,
+                    hidden: true,
+                    backgroundColor: COLOR_BLUE_TRANSPARENT_1,
+                    data: priceChangeData['stock']
+                }]
+            };
+        @endif
+
+        @if(isset($transactionsChartData))
+            var transactionChangeData = @json($transactionsChartData);
+
+            var transactionChartData = {
+                labels: transactionChangeData['datetime'],
+                datasets: [{
+                    label: 'Sprzedane sztuki',
+                    borderColor: COLOR_GREEN,
+                    pointBackgroundColor: COLOR_GREEN,
+                    pointRadius: 2,
+                    borderWidth: 2,
+                    backgroundColor: COLOR_GREEN_TRANSPARENT_1,
+                    data: transactionChangeData['units-sold']
+                }]
+            };
+
+        @endif
         var handleDateRangeFilter = function() {
             $('input[name="daterange"]').html(moment().subtract(7,'days').format('YYYY-MM-DD') + ' - ' + moment().format('YYYY-MM-DD'));
+
             $('#daterange-prev-date').html(moment().subtract(15,'days').format('D MMMM') + ' - ' + moment().subtract(8,'days').format('D MMMM YYYY'));
 
             $('input[name="daterange"]').daterangepicker({
                 @if(!isset($fromDate))
                 startDate: moment().subtract(7, 'days'),
                 @else
-                startDate: {{$fromDate}},
+                startDate: @json($fromDate),
                 @endif
 
                 @if(!isset($toDate))
                 endDate: moment(),
                 @else
-                endDate: {{$toDate}},
+                endDate: @json($toDate),
                 @endif
                 minDate: '2020-01-10',
                 maxDate: moment(),
@@ -327,11 +382,23 @@
             });
         };
         var handleChartJs = function(){
-            var ctx = document.getElementById('line-chart').getContext('2d');
-            var lineChart = new Chart(ctx, {
-                type: 'line',
-                data: lineChartData
-            });
+            @if(isset($priceChartData))
+                var ctx = document.getElementById('price-chart').getContext('2d');
+
+                var lineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: lineChartData
+                });
+            @endif
+
+            @if(isset($transactionsChartData))
+                var ptx = document.getElementById('transactions-chart').getContext('2d');
+                var transactionsChart = new Chart(ptx, {
+                    type: 'line',
+                    data: transactionChartData
+                });
+
+            @endif
         };
 
         var Offers = function () {
