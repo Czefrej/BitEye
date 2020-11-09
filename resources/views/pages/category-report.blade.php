@@ -79,8 +79,6 @@
                             </div>
                         </div>
                         <div class="row form-group m-b-10" id="category-div-1">
-
-                            <input type="hidden" name="_token" value="ryobH29NmHOs8HfZbB8ZzGD5UFui2zTF8V84ZGtC" data-np-checked="1">
                             <div class="col-xl-3">
 
                             </div>
@@ -89,9 +87,6 @@
                                     <div id="cateogories">
 
                                     </div>
-{{--                                    <select class="form-control" onchange="onSelect(this);" id="category-select-1" name="category" data-parsley-required="true">--}}
-{{--                                        <option value="">Wybierz kategorię</option>--}}
-{{--                                    </select>--}}
                                 </div>
                             </div>
                             <div class="col-xl-3">
@@ -101,13 +96,12 @@
 
                         <div class="row form-group m-b-10">
 
-                            <input type="hidden" name="_token" value="ryobH29NmHOs8HfZbB8ZzGD5UFui2zTF8V84ZGtC" data-np-checked="1">
                             <div class="col-xl-3">
 
                             </div>
                             <div class="text-center col-xl-6">
                                 <div class="form-group row m-b-15">
-                                    <input class="form-control" onchange="onSelect(this);" placeholder="Słowa kluczowe" name="keywords" data-parsley-required="true">
+                                    <input class="form-control" placeholder="Słowa kluczowe" name="keywords" data-parsley-required="true">
 
                                 </div>
                             </div>
@@ -222,80 +216,6 @@
 
         };
 
-        function loadMessage(category_id) {
-            return $.parseJSON($.ajax({
-                type:'POST',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url:"/ajax/category/"+category_id,
-                data:'_token = <?php echo csrf_token() ?>',
-                dataType: "json",
-                async: false
-            }).responseText);
-        }
-
-        function appendSelect(element) {
-            var $el = $("#category-div-"+element);
-            id= element+1;
-            var newOptions = loadMessage($("#category-select-"+element).val())['response'];
-            if(newOptions.length !== 0) {
-                $("#category-select-"+element).removeAttr('name');
-                $("#category-select-"+id).attr('name', 'category');
-                $el.after("<div class=\"row form-group m-b-5\" id=\"category-div-" + id + "\">\n" +
-                    "\n" +
-                    "                                <input type=\"hidden\" name=\"_token\" value=\"ryobH29NmHOs8HfZbB8ZzGD5UFui2zTF8V84ZGtC\" data-np-checked=\"1\">\n" +
-                    "                                <div class=\"col-xl-3\">\n" +
-                    "\n" +
-                    "                                </div>\n" +
-                    "                                <div class=\"text-center col-xl-6\">\n" +
-                    "                                    <div class=\"form-group row m-b-15\">\n" +
-                    "                                        <select class=\"form-control\" onchange=\"onSelect(this);\" id=\"category-select-" + id + "\" data-parsley-required=\"true\">\n" +
-                    "                                            <option value=\"\">Wybierz podkategorię</option>\n" +
-                    "                                        </select>\n" +
-                    "                                    </div>\n" +
-                    "                                </div>\n" +
-                    "                                <div class=\"col-xl-3\">\n" +
-                    "\n" +
-                    "                                </div>\n" +
-                    "                            </div>");
-
-
-                var current = $("#category-select-" + id);
-
-
-                $.each(newOptions, function (id, name) {
-                    current.append($("<option></option>")
-                        .attr("value", id).text(name));
-                });
-            }
-        }
-        function resetSelects(removeFromElement){
-
-            tempID = removeFromElement+1;
-
-            $("#category-select-"+removeFromElement).attr('name', 'category');
-
-            while($('#category-select-'+tempID).length) {
-                $('#category-div-'+tempID).remove()
-                tempID++;
-            }
-        }
-
-        function onSelect(element){
-            resetSelects(parseInt(element.id.substr(element.id.length-1)))
-            appendSelect(parseInt(element.id.substr(element.id.length-1)))
-            return true
-        }
-
-        $( document ).ready(function() {
-            var newOptions = loadMessage(0)['response'];
-            var $el = $("#category-select-"+1);
-            $.each(newOptions, function(id,name) {
-                $el.append($("<option></option>")
-                    .attr("value", id).text(name));
-            });
-        });
 
         var handleDateRangeFilter = function() {
             $('input[name="daterange"]').html(moment().subtract(7,'days').format('YYYY-MM-DD') + ' - ' + moment().format('YYYY-MM-DD'));

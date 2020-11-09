@@ -42,7 +42,10 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth']],function (){
             return view('pages.category-report');
         })->name("category.index");
         Route::post('/', 'App\Http\Controllers\CategoryController@processForm')->name("category.store");
-        Route::get('/{id}/{fromDate?}/{toDate?}', 'App\Http\Controllers\OfferController@show')->middleware("plan.eligible")->name("offer.show");
+        Route::get('/{fromDate}/{toDate}/{categories}', 'App\Http\Controllers\CategoryController@show')
+            ->where('categories', '(.*)')
+            ->middleware("plan.eligible")
+            ->name("category.show");
 
     });
 

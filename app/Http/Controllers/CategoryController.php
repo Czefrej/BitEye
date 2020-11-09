@@ -12,9 +12,31 @@ use Illuminate\Support\Facades\Validator;
 class CategoryController extends Controller
 {
     //
-    public function show(){
-        $o = Offer::select("*")
-            ->whereRaw("MATCH(name,ean) AGAINST('karmidło')")->limit(10)->get();
+    public function show($fromDate,$toDate,$categories){
+
+        $data = array(
+            "categories" => str_replace("/",";",$categories),
+            "daterange"=>$fromDate." - ".$toDate
+        );
+
+        $validator = $this->validator($data);
+        if (!$validator->fails()) {
+            $categories = explode(";",$categories);
+            $numberOfCategories = sizeof($categories);
+            $categ = Category::findMany($categories);
+            if($categ->count() == $numberOfCategories){
+                $offer = Offer::select("*")->join("offer_change","offer.id","=","offer_id")
+                    ->where("offer.creation_date",">=",$fromDate)
+                    ->where("offer.creation_date","<=",$toDate)
+                    ->whereIn("offer.category_id",$categories)->groupBy("offer.id")->sum("stock");
+                dd($offer);
+            }else{
+                $validator->getmessagebag()->add("not_found", __("offer.notFound"));
+                return back()->witherrors($validator)->withinput();
+            }
+        }else{
+            return redirect(route("category.index"))->withErrors($validator);
+        }
 
     }
 
@@ -37,12 +59,17 @@ class CategoryController extends Controller
         $validator = $this->validator($data);
         if (!$validator->fails()) {
             $daterange = explode(" - ",$date);
+            $categoryString = str_replace(";","/",$categories);
             $categories = explode(";",$categories);
+            $numberOfCategories = sizeof($categories);
             try {
                 $categories = Category::findMany($categories);
-                dd($categories);
-                //return redirect("app/offer/$id/$daterange[0]/$daterange[1]")->withInput();
-
+                if($categories->count() == $numberOfCategories)
+                    return redirect("app/category/$daterange[0]/$daterange[1]/$categoryString")->withInput();
+                else{
+                    $validator->getmessagebag()->add("not_found", __("offer.notFound"));
+                    return back()->witherrors($validator)->withinput();
+                }
             } catch (modelnotfoundexception $e) {
                 $validator->getmessagebag()->add("not_found", __("offer.notFound"));
                 return back()->witherrors($validator)->withinput();
