@@ -26,7 +26,7 @@ class SubscriptionPlan
                     $fromDate = new DateTime($fromDate);
                     $toDate = new DateTime();
                     $dateDiff = $toDate->diff($fromDate)->format("%a");;
-                    if(config("subscription_plans.free.historicalAccess") >= $dateDiff)
+                    if(config("subscription_plans.free.search.availableHistory") >= $dateDiff)
                         return $next($request);
                     else return redirect(route("app")); #Not eligible
                 } else return $next($request); #Let controller take care of validation

@@ -9,7 +9,7 @@ Chart.defaults.global.defaultFontColor = COLOR_DARK;
 Chart.defaults.global.defaultFontFamily = FONT_FAMILY;
 Chart.defaults.global.defaultFontStyle = FONT_WEIGHT;
 
-var randomScalingFactor = function() { 
+var randomScalingFactor = function() {
 	return Math.round(Math.random()*100)
 };
 
@@ -152,6 +152,7 @@ var ChartJs = function () {
 		}
 	};
 }();
+
 
 $(document).ready(function() {
 	ChartJs.init();

@@ -73,7 +73,7 @@
 							</div>
 							<div class="input-group text-center col-xl-6">
 								<div class="input-group-prepend"><span class="input-group-text">https://allegro.pl/oferta/</span></div>
-                                <input type="number" name="auctionNumber" class="form-control" placeholder="Wprowadź numer aukcji" @if(isset($offer)) value="{{$offer->id}}" @else value="{{old('auctionNumber')}}" @endif required autocomplete="auctionNumber">
+                                <input type="number" name="auctionNumber" class="form-control" placeholder="Wprowadź numer aukcji" @if(isset($offer)) value="{{$offer->offer_id}}" @else value="{{old('auctionNumber')}}" @endif required autocomplete="auctionNumber">
 
 							</div>
 							<div class="col-xl-3">
@@ -104,7 +104,7 @@
                 <div class="panel panel-inverse" data-sortable-id="form-stuff-8">
 
                     <div class="panel-heading ui-sortable-handle">
-                        <h4 class="panel-title">Oferta #{{$offer->id}} - {{$offerDetails['name']}}</h4>
+                        <h4 class="panel-title">Oferta #{{$offer->offer_id}} - {{$offer->name}}</h4>
                         <div class="panel-heading-btn">
                             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
                             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
@@ -116,14 +116,14 @@
                     <div class="panel-body">
                         <div class="row form-group m-b-10">
                             <div class="col-xl-6 text-center">
-                                <img src="{{$offer->img_url}}" width="50%" alt="{{$offer->id}}" class="img-thumbnail">
+                                <img src="{{$offer->img_url}}" width="50%" alt="{{$offer->offer_id}}" class="img-thumbnail">
                             </div>
                             <div class="text-center col-xl-6">
                                 <div class="text-gray text-right col-xl-12 mb-5">
                                     <small>Supermarket  /  Artykuły dla zwierząt  / Dla kotów  /  Karmy  /  {{$category['name']}} ({{$category['id']}})</small>
                                 </div>
                                 <div>
-                                    <h4>{{$offerDetails['name']}}</h4>
+                                    <h4>{{$offer->name}}</h4>
                                     <p class="text-gray">
                                         od
                                         @if($seller['super_seller'])
@@ -223,7 +223,7 @@
         @endif
 	</div>
     <div class="row">
-        @if(isset($priceChartData))
+        @if(isset($historicalData))
             <div class="col-xl-6 php  ui-sortable">
                 <div class="panel panel-inverse">
                     <div class="panel-heading ui-sortable-handle">
@@ -243,8 +243,6 @@
                 </div>
 
             </div>
-        @endif
-        @if(isset($transactionsChartData))
             <div class="col-xl-6 php  ui-sortable">
                 <div class="panel panel-inverse">
                     <div class="panel-heading ui-sortable-handle">
@@ -275,54 +273,81 @@
     <script src="/assets/plugins/moment/moment.js"></script>
     <script src="/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
     <script src="/assets/plugins/chart.js/dist/Chart.min.js"></script>
-
     <script>
+        function pretifyNumber(x) {
+            x = x.toString();
+            var pattern = /(-?\d+)(\d{3})/;
+            while (pattern.test(x))
+                x = x.replace(pattern, "$1 $2");
+            return x;
+        }
+
+        var total = @json($totalStats ?? '');
+
         var randomScalingFactor = function() {
             return Math.round(Math.random()*100)
         };
-        @if(isset($priceChartData))
-            var priceChangeData = @json($priceChartData);
+        @if(isset($historicalData))
+            var historicalData = @json($historicalData);
 
-            var lineChartData = {
-                labels: priceChangeData['datetime'],
+            var offerHistoryChartData = {
+                labels: historicalData['date'],
                 datasets: [{
                     label: 'Cena',
+                    borderColor: COLOR_BLACK,
+                    pointBackgroundColor: COLOR_BLACK,
+                    pointRadius: 2,
+                    borderWidth: 2,
+                    data: historicalData['price'],
+                    yAxisID: 'price-axis',
+                    fill: false
+                },{
+                    label: 'Stan magazynowy',
                     borderColor: COLOR_ORANGE,
                     pointBackgroundColor: COLOR_ORANGE,
                     pointRadius: 2,
                     borderWidth: 2,
-                    backgroundColor: COLOR_ORANGE_TRANSPARENT_1,
-                    data: priceChangeData['price']
+                    hidden: true,
+                    data: historicalData['stock'],
+                    yAxisID: 'stock-axis',
+                    fill: false
+                }]
+            };
+            var transactionChartData = {
+                labels: historicalData['date'],
+                datasets: [{
+                    label: 'Sprzedane sztuki',
+                    borderColor: COLOR_BLACK,
+                    pointBackgroundColor: COLOR_BLACK,
+                    pointRadius: 2,
+                    borderWidth: 2,
+                    data: historicalData['units_sold'],
+                    fill: false,
+                    yAxisID: 'units-axis',
                 },{
-                    label: 'Stan magazynowy',
-                    borderColor: COLOR_BLUE,
-                    pointBackgroundColor: COLOR_BLUE,
+                    label: 'Obrót',
+                    borderColor: COLOR_ORANGE,
+                    pointBackgroundColor: COLOR_ORANGE,
+                    pointRadius: 2,
+                    borderWidth: 2,
+                    data: historicalData['revenue'],
+                    fill: false,
+                    yAxisID: 'revenue-axis',
+                },{
+                    label: 'Transakcje',
+                    borderColor: COLOR_PINK,
+                    pointBackgroundColor: COLOR_PINK,
                     pointRadius: 2,
                     borderWidth: 2,
                     hidden: true,
-                    backgroundColor: COLOR_BLUE_TRANSPARENT_1,
-                    data: priceChangeData['stock']
+                    data: historicalData['transactions'],
+                    fill: false,
+                    yAxisID: 'revenue-axis',
                 }]
             };
         @endif
 
-        @if(isset($transactionsChartData))
-            var transactionChangeData = @json($transactionsChartData);
 
-            var transactionChartData = {
-                labels: transactionChangeData['datetime'],
-                datasets: [{
-                    label: 'Sprzedane sztuki',
-                    borderColor: COLOR_GREEN,
-                    pointBackgroundColor: COLOR_GREEN,
-                    pointRadius: 2,
-                    borderWidth: 2,
-                    backgroundColor: COLOR_GREEN_TRANSPARENT_1,
-                    data: transactionChangeData['units-sold']
-                }]
-            };
-
-        @endif
         var handleDateRangeFilter = function() {
             $('input[name="daterange"]').html(moment().subtract(7,'days').format('YYYY-MM-DD') + ' - ' + moment().format('YYYY-MM-DD'));
 
@@ -382,20 +407,63 @@
             });
         };
         var handleChartJs = function(){
-            @if(isset($priceChartData))
+            @if(isset($historicalData))
                 var ctx = document.getElementById('price-chart').getContext('2d');
 
-                var lineChart = new Chart(ctx, {
+                var offerHistoryChart = new Chart(ctx, {
                     type: 'line',
-                    data: lineChartData
+                    data: offerHistoryChartData,
+                    options:{
+                        tooltips:{
+                          mode: 'index',
+                          intersect: true
+                        },
+                        hover:{
+                            mode: 'index',
+                            intersect: true
+                        },
+                        scales:{
+                            yAxes:[{
+                                type: 'linear',
+                                position: 'left',
+                                id: 'price-axis'
+                            },{
+                                type: 'linear',
+                                position: 'right',
+                                id: 'stock-axis'
+                            }]
+                        }
+                    }
                 });
-            @endif
-
-            @if(isset($transactionsChartData))
                 var ptx = document.getElementById('transactions-chart').getContext('2d');
                 var transactionsChart = new Chart(ptx, {
                     type: 'line',
-                    data: transactionChartData
+                    data: transactionChartData,
+                    options:{
+                        tooltips:{
+                            mode: 'index',
+                            intersect: true
+                        },
+                        hover:{
+                            mode: 'index',
+                            intersect: true
+                        },
+                        title:{
+                            display: true,
+                            text: 'Całkowita wartość sprzedaży: '+ pretifyNumber(Math.round(total['revenue']*1000)/1000)+ ' zł'
+                        },
+                        scales:{
+                            yAxes:[{
+                                type: 'linear',
+                                position: 'left',
+                                id: 'units-axis'
+                            },{
+                                type: 'linear',
+                                position: 'right',
+                                id: 'revenue-axis'
+                            }]
+                        }
+                    }
                 });
 
             @endif

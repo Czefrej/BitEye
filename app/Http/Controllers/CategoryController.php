@@ -25,10 +25,9 @@ class CategoryController extends Controller
             $numberOfCategories = sizeof($categories);
             $categ = Category::findMany($categories);
             if($categ->count() == $numberOfCategories){
-                $offer = Offer::select("*")->join("offer_change","offer.id","=","offer_id")
-                    ->where("offer.creation_date",">=",$fromDate)
-                    ->where("offer.creation_date","<=",$toDate)
-                    ->whereIn("offer.category_id",$categories)->groupBy("offer.id")->sum("stock");
+                $offer = Offer::select("*")->join("offer_change","offer.offer_id","=","offer_change.offer_id")
+                    ->whereBetween("offer_change.creation_date",[$fromDate,$toDate])
+                    ->whereIn("offer.category_id",$categories)->groupBy('offer_change.creation_date')->sum('stock');
                 dd($offer);
             }else{
                 $validator->getmessagebag()->add("not_found", __("offer.notFound"));

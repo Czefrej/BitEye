@@ -45,7 +45,7 @@
 			<div class="panel panel-inverse">
 				<!-- begin panel-heading -->
 				<div class="panel-heading">
-					<h4 class="panel-title">DataTable - RowReorder</h4>
+					<h4 class="panel-title">Sellers</h4>
 					<div class="panel-heading-btn">
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
@@ -69,10 +69,10 @@
 							<tr>
 								<th width="1%"></th>
 								<th width="1%" data-orderable="false"></th>
-								<th class="text-nowrap">Rendering engine</th>
-								<th class="text-nowrap">Browser</th>
-								<th class="text-nowrap">Platform(s)</th>
-								<th class="text-nowrap">Engine version</th>
+								<th class="text-nowrap">Seller</th>
+								<th class="text-nowrap">Revenue</th>
+								<th class="text-nowrap">Units Sold</th>
+								<th class="text-nowrap">Market Share</th>
 								<th class="text-nowrap">CSS grade</th>
 							</tr>
 						</thead>

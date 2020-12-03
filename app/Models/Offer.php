@@ -10,13 +10,13 @@ class Offer extends Model
     use HasFactory;
     protected $connection = "mysql-tradedata";
     protected $table = "offer";
-    protected $primaryKey = "id";
+    protected $primaryKey = "offer_id";
     protected $keyType = "bigint";
     public $incrementing = false;
     public $timestamps = false;
 
     public function seller(){
-        return $this->belongsTo("App\Models\Seller");
+        return $this->belongsTo("App\Models\Seller","seller_id");
     }
 
     public function category(){

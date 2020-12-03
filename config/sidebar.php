@@ -17,24 +17,28 @@ return [
       'title' => 'Dashboard',
       'url' => '/app/',
       'caret' => false,
-  ],[
-      'icon' => 'fa fa-chart-bar',
-      'title' => 'Raporty',
-      'url' => 'javascript:;',
-      'caret' => true,
-      'sub_menu' => [[
-          'url' => '/app/category',
-          'title' => 'Raport kategorii'
-      ]]
-  ],[
+  ],
+//      [
+//      'icon' => 'fa fa-chart-bar',
+//      'title' => 'Raporty',
+//      'url' => 'javascript:;',
+//      'caret' => true,
+//      'sub_menu' => [[
+//          'url' => '/app/category',
+//          'title' => 'Raport kategorii'
+//      ]]
+//  ],
+      [
       'icon' => 'fa fa-hdd',
       'title' => 'Aukcje',
       'url' => '/app/offer'
-  ],[
-		'icon' => 'fa fa-user',
-		'title' => 'Sprzedawcy',
-		'url' => 'javascript:;'
-	],[
+  ],
+//      [
+//		'icon' => 'fa fa-user',
+//		'title' => 'Sprzedawcy',
+//		'url' => 'javascript:;'
+//	],
+      [
 		'icon' => 'fa fa-rocket',
 		'title' => 'API',
 		'label' => 'Wkrótce',

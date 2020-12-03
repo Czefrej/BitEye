@@ -22,8 +22,18 @@
     <list default="true" id="d83fb2d9-13ae-4b82-8454-9f3b8b0a65c3" name="Default Changelist" comment="Started offer page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OfferController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OfferController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/SubscriptionPlan.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/SubscriptionPlan.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Offer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Offer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Seller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Seller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/OfferHistoryService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/OfferHistoryService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/SellerHistoryService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/SellerHistoryService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/sidebar.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/demo/chart-js.demo.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/demo/chart-js.demo.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/category-report.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/category-report.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/offers.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/offers.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/table-manage-rowreorder.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/table-manage-rowreorder.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +227,15 @@
       <workItem from="1603009847526" duration="6592000" />
       <workItem from="1603387230185" duration="10661000" />
       <workItem from="1603436244780" duration="18745000" />
-      <workItem from="1604916056603" duration="2526000" />
+      <workItem from="1604916056603" duration="3512000" />
+      <workItem from="1604995968625" duration="2577000" />
+      <workItem from="1605868834373" duration="43000" />
+      <workItem from="1605868891036" duration="1286000" />
+      <workItem from="1606293373613" duration="4917000" />
+      <workItem from="1606816132489" duration="9213000" />
+      <workItem from="1606847976139" duration="5638000" />
+      <workItem from="1606909663502" duration="7064000" />
+      <workItem from="1606995286736" duration="13253000" />
     </task>
     <servers />
   </component>
@@ -262,9 +280,10 @@
     </state>
     <state x="2646" y="304" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1858.1080/1920.0.2048.1112@1920.0.2048.1112" timestamp="1603456127491" />
     <state x="659" y="295" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1602248797344" />
-    <state x="613" y="171" key="#phpunit.xml" timestamp="1603014051561">
-      <screen x="0" y="0" width="1858" height="1080" />
+    <state x="-1312" y="171" key="#phpunit.xml" timestamp="1607004866476">
+      <screen x="-1920" y="0" width="1842" height="1080" />
     </state>
+    <state x="-1312" y="171" key="#phpunit.xml/-1920.0.1842.1080/0.0.1986.1152@-1920.0.1842.1080" timestamp="1607004866476" />
     <state x="613" y="171" key="#phpunit.xml/0.0.1858.1080/1920.0.2048.1112@0.0.1858.1080" timestamp="1603014051561" />
     <state x="613" y="171" key="#phpunit.xml/0.0.1858.1080@0.0.1858.1080" timestamp="1602431404824" />
     <state width="1249" height="292" key="GridCell.Tab.0.bottom" timestamp="1602153906484">
@@ -299,22 +318,24 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="772" y="313" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1602078496593" />
-    <state x="-1860" y="10" width="1295" height="870" maximized="true" key="dock-window-1" timestamp="1604947957732">
-      <screen x="-1920" y="0" width="1842" height="1080" />
+    <state x="220" y="427" width="1295" height="870" maximized="true" key="dock-window-1" timestamp="1607009359421">
+      <screen x="0" y="0" width="1986" height="1152" />
     </state>
-    <state x="30" y="360" width="1295" height="1170" key="dock-window-1/-1920.0.1842.1080/0.0.1986.1152@-1920.0.1842.1080" timestamp="1604916513805" />
-    <state x="-1860" y="10" width="1295" height="870" maximized="true" key="dock-window-1/-1920.0.1842.1080/0.0.1986.1152@0.0.1986.1152" timestamp="1604947957732" />
+    <state x="220" y="427" width="1295" height="870" maximized="true" key="dock-window-1/-1920.0.1842.1080/0.0.1986.1152@-1920.0.1842.1080" timestamp="1607009359421" />
+    <state x="146" y="438" width="1295" height="870" maximized="true" key="dock-window-1/-1920.0.1842.1080/0.0.1986.1152@0.0.1986.1152" timestamp="1606911605989" />
     <state x="683" y="334" width="1211" height="1099" key="dock-window-1/0.0.1858.1080/1920.0.2048.1112@0.0.1858.1080" timestamp="1603473944500" />
     <state x="683" y="334" width="1211" height="1099" maximized="true" key="dock-window-1/0.0.1858.1080/1920.0.2048.1112@1920.0.2048.1112" timestamp="1603455082951" />
-    <state x="2565" y="257" key="run.anything.popup" timestamp="1603455916792">
-      <screen x="1920" y="0" width="2048" height="1112" />
+    <state x="625" y="266" key="run.anything.popup" timestamp="1606911603597">
+      <screen x="0" y="0" width="1986" height="1152" />
     </state>
+    <state x="625" y="266" key="run.anything.popup/-1920.0.1842.1080/0.0.1986.1152@0.0.1986.1152" timestamp="1606911603597" />
     <state x="585" y="250" key="run.anything.popup/0.0.1858.1080/1920.0.2048.1112@0.0.1858.1080" timestamp="1602955108367" />
     <state x="2565" y="257" key="run.anything.popup/0.0.1858.1080/1920.0.2048.1112@1920.0.2048.1112" timestamp="1603455916792" />
     <state x="585" y="250" key="run.anything.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1602244724818" />
-    <state x="2573" y="242" width="741" height="699" key="search.everywhere.popup" timestamp="1603441131156">
-      <screen x="1920" y="0" width="2048" height="1112" />
+    <state x="-1333" y="235" width="672" height="679" key="search.everywhere.popup" timestamp="1607004780962">
+      <screen x="-1920" y="0" width="1842" height="1080" />
     </state>
+    <state x="-1333" y="235" width="672" height="679" key="search.everywhere.popup/-1920.0.1842.1080/0.0.1986.1152@-1920.0.1842.1080" timestamp="1607004780962" />
     <state x="2573" y="242" width="741" height="699" key="search.everywhere.popup/0.0.1858.1080/1920.0.2048.1112@1920.0.2048.1112" timestamp="1603441131156" />
     <state x="592" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1602492390219" />
   </component>

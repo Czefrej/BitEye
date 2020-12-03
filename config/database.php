@@ -44,7 +44,7 @@ return [
         ],
 
         'mysql-tradedata' => [
-            'driver' => 'mysql',
+            'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_TRADEDATA_HOST', '127.0.0.1'),
             'port' => env('DB_TRADEDATA_PORT', '3306'),
@@ -52,7 +52,7 @@ return [
             'username' => env('DB_TRADEDATA_USERNAME', 'forge'),
             'password' => env('DB_TRADEDATA_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
-            'charset' => 'utf8mb4',
+            'charset' => 'utf8',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
             'prefix_indexes' => true,

@@ -10,7 +10,7 @@ class Seller extends Model
     use HasFactory;
     protected $connection = "mysql-tradedata";
     protected $table = "seller";
-    protected $primaryKey = "id";
+    protected $primaryKey = "seller_id";
     public $incrementing = false;
     public $timestamps = false;
 

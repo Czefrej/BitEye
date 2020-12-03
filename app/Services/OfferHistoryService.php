@@ -14,7 +14,7 @@ class OfferHistoryService
         // logic here...
 
         return OfferChange::select(["*"])->where('offer_id', "=", "?")->orderBy("creation_date","DESC")
-            ->setBindings([$offer->id])->first();
+            ->setBindings([$offer->offer_id])->first();
     }
 
     public static function getPriceChartdata($fetchedOfferHistory){

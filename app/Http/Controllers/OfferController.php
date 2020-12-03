@@ -81,19 +81,48 @@ class OfferController extends Controller
                     $offer = Offer::findOrFail($id);
                     $category = $offer->category;
                     if($fromDate != null && $toDate != null) {
-                        $offerHistory = OfferChange::select(["price", "stock", "transactions", "creation_date",DB::raw("Date(creation_date) as creation_day")])
-                            ->where(DB::Raw('DATE(creation_date)'), '>=', "$fromDate")
-                            ->where(DB::Raw('DATE(creation_date)'), '<=', "$toDate")
-                            ->where("offer_id","=","$id")->get();
 
+                        $offerHistory = OfferChange::with("offer")
+                            ->selectRaw("transactions,price,stock,NVL(lag(offer_change.stock) over (order by offer_change.creation_date) - offer_change.stock, 0) as units,units*price as revenue,offer_change.creation_date as date")
+                            ->where('date', '>=', DB::Raw("dateadd(day,-1,'$fromDate')"))
+                            ->where('date', '<=', "$toDate")
+                            ->where('offer_change.offer_id',"=",$id)->orderBy("date","asc")
+                            ->get();
+                        $offerData = array();
+                        $i =-1;
+                        foreach ($offerHistory as $row){
+                            if($i >= 0) {
+                                $offerData["price"][$i] = $row->price;
+                                $offerData["stock"][$i] = $row->stock;
+                                $offerData["units_sold"][$i] = $row->units;
+                                $offerData["revenue"][$i] = $row->revenue;
+                                $offerData['date'][$i] = $row->date;
+                                $offerData['transactions'][$i] = $row->transactions;
+                            }
+                            $i++;
+                        }
+
+//                        $offerHistory = OfferChange::select(["price", "stock", "transactions", "creation_date",DB::raw("Date(creation_date) as creation_day")])
+//                            ->where(DB::Raw('DATE(creation_date)'), '>=', "$fromDate")
+//                            ->where(DB::Raw('DATE(creation_date)'), '<=', "$toDate")
+//                            ->where("offer_id","=","$id")->get();
+//
                         $sellerDetails = SellerHistoryService::getCurrentDetails($offer);
                         $offerDetails = OfferHistoryService::getCurrentDetails($offer);
+
+                        $totalStats = array();
+                        $totalStats['revenue'] = 0;
+                        $totalStats['units_sold'] = 0;
+                        for($i=0;$i<sizeof($offerData['date']);$i++){
+                            $totalStats['revenue'] += $offerData['revenue'][$i];
+                            $totalStats['units_sold'] += $offerData['units_sold'][$i];
+                        }
+
                         return view('pages.offers', ['offer' => $offer,
                             'seller' => $sellerDetails, 'offerDetails' => $offerDetails,
                             'category' => $category, 'history' => $offerHistory,
                             'fromDate'=>$fromDate,'toDate'=>$toDate,
-                            'priceChartData'=>OfferHistoryService::getPriceChartdata($offerHistory),
-                            'transactionsChartData'=>OfferHistoryService::getTransactionsChartdata($offerHistory)]);
+                            'historicalData'=>$offerData,'totalStats'=>$totalStats]);
                     }else{
                         $offerHistory = $offer->changes;
                         $sellerDetails = SellerHistoryService::getCurrentDetails($offer);
