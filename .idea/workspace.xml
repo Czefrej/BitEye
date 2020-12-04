@@ -20,11 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d83fb2d9-13ae-4b82-8454-9f3b8b0a65c3" name="Default Changelist" comment="Started offer page">
-      <change afterPath="$PROJECT_DIR$/public/assets/biteye-loading.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/biteye-loading-onclick.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/biteye-loading-spinner.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/biteye-preview.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/custom.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OfferController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OfferController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/subscription_plans.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/subscription_plans.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/offers.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/offers.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +38,13 @@
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -171,6 +182,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -181,9 +193,9 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Wiktor\PhpstormProjects\BitEye\public\assets" />
       <recent name="C:\Users\Wiktor\PhpstormProjects\BitEye\public" />
+      <recent name="C:\Users\Wiktor\PhpstormProjects\BitEye\public\assets\img" />
       <recent name="C:\Users\Wiktor\PhpstormProjects\BitEye\resources\views\errors" />
       <recent name="C:\Users\Wiktor\PhpstormProjects\BitEye\resources\views\auth\old" />
-      <recent name="C:\Users\Wiktor\PhpstormProjects\BitEye\resources\views\auth\passwords" />
     </key>
   </component>
   <component name="RunManager">
@@ -227,7 +239,7 @@
       <workItem from="1606847976139" duration="5638000" />
       <workItem from="1606909663502" duration="7064000" />
       <workItem from="1606995286736" duration="13253000" />
-      <workItem from="1607074196373" duration="8313000" />
+      <workItem from="1607074196373" duration="15820000" />
     </task>
     <servers />
   </component>

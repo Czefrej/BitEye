@@ -4,7 +4,7 @@ return [
         "apiRequestsPerMinute"=>0,
         "search"=>[
             "maxCategories"=>1,
-            "availableHistory"=>7
+            "availableHistory"=>7+1
         ]
     ],
     "bronze"=>[

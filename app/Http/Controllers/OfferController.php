@@ -116,8 +116,10 @@ class OfferController extends Controller
                         $totalStats['revenue'] = 0;
                         $totalStats['units_sold'] = 0;
                         for($i=0;$i<sizeof($offerData['date']);$i++){
-                            $totalStats['revenue'] += $offerData['revenue'][$i];
-                            $totalStats['units_sold'] += $offerData['units_sold'][$i];
+                            if($offerData['revenue'][$i]>=0)
+                                $totalStats['revenue'] += $offerData['revenue'][$i];
+                            if($offerData['revenue'][$i]>=0)
+                                $totalStats['units_sold'] += $offerData['units_sold'][$i];
                         }
 
                         return view('pages.offers', ['offer' => $offer,

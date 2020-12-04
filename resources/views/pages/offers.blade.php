@@ -6,6 +6,7 @@
 	<link href="/assets/plugins/jvectormap-next/jquery-jvectormap.css" rel="stylesheet" />
     <link href="/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
 	<link href="/assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
+    <link href="/css/custom.css" rel="stylesheet"/>
 @endpush
 
 @section('content')
@@ -22,7 +23,6 @@
 					<h4 class="panel-title">Wyszukiwarka aukcji</h4>
 					<div class="panel-heading-btn">
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
 					</div>
 				</div>
@@ -54,7 +54,7 @@
 
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" id="date-input">
                             <div class="col-xl-3">
 
                             </div>
@@ -66,7 +66,7 @@
 
                             </div>
                         </div>
-						<div class="row form-group m-b-10">
+						<div class="row form-group m-b-10" id="offer-input">
                             @csrf
 							<div class="col-xl-3">
 
@@ -83,7 +83,7 @@
 							<div class="col-xl-3">
 
 							</div>
-							<div class="input-group text-center col-xl-6">
+							<div class="input-group text-center col-xl-6" id="submit-button">
 								<button type="submit" class="btn btn-sm btn-primary btn-orange m-r-5 float-right">Szukaj</button>
 							</div>
 							<div class="col-xl-3">
@@ -94,10 +94,18 @@
                         <div class="row m-b-10">
                             <div class="col-xl-3">
                             </div>
-                            <div class="input-group col-xl-6 d-none" id="loading-spinner">
+                            <div class="input-group col-xl-6 d-block hide-img" id="loading-spinner">
                                 <div class="text-center">
-                                    <object id="animated-svg" type="image/svg+xml" width="150px" data="/assets/biteye-loading.svg">
+                                    <object id="animated-svg" type="image/svg+xml" width="370px" data="/assets/biteye-loading-spinner.svg">
                                     </object>
+                                </div>
+
+                                <div>
+                                    <h2 class="text-center" style="font-family: 'Poppins', sans-serif;">
+                                        Rzucę na to okiem.<br>
+                                        To zajmie tylko chwilkę...
+                                    </h2>
+
                                 </div>
 
                             </div>
@@ -499,11 +507,14 @@
         });
 
         $("form").submit(function( event ) {
-            $('#loading-spinner').addClass('d-block').removeClass('d-none');
-            a = document.getElementById("animated-svg");
-            b = a.contentDocument
-            c = b.getElementById("es3llvop0zv1")
-            c.dispatchEvent(new Event('click'));
+            $('#loading-spinner').removeClass('hide-img');
+            $('#submit-button').addClass('hide-img');
+            $('#date-input').addClass('hide-img');
+            $('#offer-input').addClass('hide-img');
+            // a = document.getElementById("animated-svg");
+            // b = a.contentDocument
+            // c = b.getElementById("eecardrcm4gv1");
+            // c.dispatchEvent(new Event('click'));
         });
     </script>
 @endpush
