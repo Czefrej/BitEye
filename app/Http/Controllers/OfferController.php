@@ -60,7 +60,7 @@ class OfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function show($id,$fromDate = null, $toDate = null)
+    public function show($category_id,$id,$fromDate = null, $toDate = null)
     {
         if($fromDate == null && $toDate == null){
             $data = array("auctionNumber"=>$id);
@@ -78,12 +78,14 @@ class OfferController extends Controller
         if(!$validator->fails()) {
             if ($id != null) {
                 try {
-                    $offer = Offer::findOrFail($id);
+                    $offer = Offer::select("*")
+                        ->where("category_id","=","?")
+                        ->where("offer_id","=","?")
+                        ->setBindings([$category_id,$id])->firstOrFail();
                     $category = $offer->category;
                     if($fromDate != null && $toDate != null) {
 
-                        $offerHistory = OfferChange::with("offer")
-                            ->selectRaw("transactions,price,stock,NVL(lag(offer_change.stock) over (order by offer_change.creation_date) - offer_change.stock, 0) as units,units*price as revenue,offer_change.creation_date as date")
+                        $offerHistory = OfferChange::selectRaw("transactions,price,stock,NVL(lag(offer_change.stock) over (order by offer_change.creation_date) - offer_change.stock, 0) as units,units*price as revenue,offer_change.creation_date as date")
                             ->where('date', '>=', DB::Raw("dateadd(day,-1,'$fromDate')"))
                             ->where('date', '<=', "$toDate")
                             ->where('offer_change.offer_id',"=",$id)->orderBy("date","asc")
@@ -134,7 +136,9 @@ class OfferController extends Controller
                     }
 
                 } catch (ModelNotFoundException $e) {
-                    return view('pages.offers');
+                    $messageBag = new MessageBag;
+                    $messageBag->add(0,__("offer.notFound"));
+                    return redirect(route("offer.index"))->with(["errors" => $messageBag]);
                 }
             } else {
                 return view('pages.offers');
@@ -165,8 +169,8 @@ class OfferController extends Controller
         if (!$validator->fails()) {
             $daterange = explode(" - ",$date);
             try {
-                $offer = offer::findorfail($id);
-                return redirect("app/offer/$id/$daterange[0]/$daterange[1]")->withInput();
+                $offer = offer::select('category_id')->findorfail($id);
+                return redirect("app/offer/$offer->category_id/$id/$daterange[0]/$daterange[1]")->withInput();
 
             } catch (modelnotfoundexception $e) {
                 $validator->getmessagebag()->add("not_found", __("offer.notFound"));

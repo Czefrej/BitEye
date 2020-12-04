@@ -74,7 +74,6 @@
 							<div class="input-group text-center col-xl-6">
 								<div class="input-group-prepend"><span class="input-group-text">https://allegro.pl/oferta/</span></div>
                                 <input type="number" name="auctionNumber" class="form-control" placeholder="Wprowadź numer aukcji" @if(isset($offer)) value="{{$offer->offer_id}}" @else value="{{old('auctionNumber')}}" @endif required autocomplete="auctionNumber">
-
 							</div>
 							<div class="col-xl-3">
 
@@ -91,6 +90,21 @@
 
 							</div>
 						</div>
+
+                        <div class="row m-b-10">
+                            <div class="col-xl-3">
+                            </div>
+                            <div class="input-group col-xl-6 d-none" id="loading-spinner">
+                                <div class="text-center">
+                                    <object id="animated-svg" type="image/svg+xml" width="150px" data="/assets/biteye-loading.svg">
+                                    </object>
+                                </div>
+
+                            </div>
+                            <div class="col-xl-3">
+
+                            </div>
+                        </div>
 					</form>
 				</div>
 
@@ -482,6 +496,14 @@
 
         $(document).ready(function() {
             Offers.init();
+        });
+
+        $("form").submit(function( event ) {
+            $('#loading-spinner').addClass('d-block').removeClass('d-none');
+            a = document.getElementById("animated-svg");
+            b = a.contentDocument
+            c = b.getElementById("es3llvop0zv1")
+            c.dispatchEvent(new Event('click'));
         });
     </script>
 @endpush

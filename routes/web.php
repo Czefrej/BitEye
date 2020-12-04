@@ -32,7 +32,7 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth']],function (){
             return view('pages.offers');
         })->name("offer.index");
         Route::post('/', 'App\Http\Controllers\OfferController@processForm')->name("offer.store");
-        Route::get('/{id}/{fromDate?}/{toDate?}', 'App\Http\Controllers\OfferController@show')->middleware("plan.eligible")->name("offer.show");
+        Route::get('/{category_id}/{id}/{fromDate?}/{toDate?}', 'App\Http\Controllers\OfferController@show')->middleware("plan.eligible")->name("offer.show");
 
     });
 
