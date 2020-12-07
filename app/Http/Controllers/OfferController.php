@@ -92,12 +92,24 @@ class OfferController extends Controller
                             ->get();
                         $offerData = array();
                         $i =-1;
+
+                        $restocked = false;
                         foreach ($offerHistory as $row){
                             if($i >= 0) {
                                 $offerData["price"][$i] = $row->price;
                                 $offerData["stock"][$i] = $row->stock;
-                                $offerData["units_sold"][$i] = $row->units;
-                                $offerData["revenue"][$i] = $row->revenue;
+                                if($row->units < 0){
+                                    $restocked = true;
+                                    $offerData["units_sold"][$i] = 0;
+                                    $offerData["revenue"][$i] = 0;
+                                    $offerData['censured']["revenue"][$i] = null;
+                                    $offerData['censured']["units_sold"][$i] = null;
+                                }else{
+                                    $offerData["units_sold"][$i] = $row->units;
+                                    $offerData["revenue"][$i] = $row->revenue;
+                                    $offerData['censured']["revenue"][$i] = $row->revenue;
+                                    $offerData['censured']["units_sold"][$i] = $row->units;
+                                }
                                 $offerData['date'][$i] = $row->date;
                                 $offerData['transactions'][$i] = $row->transactions;
                             }
@@ -126,7 +138,7 @@ class OfferController extends Controller
                             'seller' => $sellerDetails, 'offerDetails' => $offerDetails,
                             'category' => $category, 'history' => $offerHistory,
                             'fromDate'=>$fromDate,'toDate'=>$toDate,
-                            'historicalData'=>$offerData,'totalStats'=>$totalStats]);
+                            'historicalData'=>$offerData,'totalStats'=>$totalStats,'restocked'=>$restocked]);
                     }else{
                         $offerHistory = $offer->changes;
                         $sellerDetails = SellerHistoryService::getCurrentDetails($offer);

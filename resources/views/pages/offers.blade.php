@@ -7,6 +7,7 @@
     <link href="/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
 	<link href="/assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
     <link href="/css/custom.css" rel="stylesheet"/>
+
 @endpush
 
 @section('content')
@@ -73,7 +74,7 @@
 							</div>
 							<div class="input-group text-center col-xl-6">
 								<div class="input-group-prepend"><span class="input-group-text">https://allegro.pl/oferta/</span></div>
-                                <input type="number" name="auctionNumber" class="form-control" placeholder="Wprowadź numer aukcji" @if(isset($offer)) value="{{$offer->offer_id}}" @else value="{{old('auctionNumber')}}" @endif required autocomplete="auctionNumber">
+                                <input type="number" id="auctionNumber" name="auctionNumber" class="form-control" placeholder="Wprowadź numer aukcji" @if(isset($offer)) value="{{$offer->offer_id}}" @else value="{{old('auctionNumber')}}" @endif required autocomplete="auctionNumber">
 							</div>
 							<div class="col-xl-3">
 
@@ -277,6 +278,24 @@
                         </div>
                     </div>
                     <div class="panel-body">
+                        @if($restocked)
+                            <div class="note note-warning note-with-right-icon m-b-15">
+                                <div class="note-content text-right">
+                                    <h4><b>Ostrzeżenie!</b></h4>
+                                    <p>
+                                        Wykryliśmy, że wykres może zawierać niedokładne dane.
+                                        Domyślnie, wszystkie punkty z niedokładnymi danymi, są automatycznie zerowane.
+                                        Aby poprawić czytelność wykresów, możesz włączyć opcję filtrowania niedokładnych danych.
+                                        Dzięki niej, nierzetelne dane nie będą wyświetlane na wykresie.
+                                    </p>
+                                    <div class="custom-control custom-switch mb-1">
+                                        <input type="checkbox" class="custom-control-input" id="customSwitch1" data-np-checked="1">
+                                        <label class="custom-control-label" for="customSwitch1">Filtruj niedokładne dane </label>
+                                    </div>
+                                </div>
+                                <div class="note-icon"><i class="fa fa-lightbulb"></i></div>
+                            </div>
+                        @endif
                         <div>
                             <canvas id="transactions-chart" data-render="chart-js"></canvas>
                         </div>
@@ -294,6 +313,7 @@
 	<script src="/assets/plugins/jvectormap-next/jquery-jvectormap-world-mill.js"></script>
     <script src="/assets/plugins/moment/moment.js"></script>
     <script src="/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <script src="/assets/plugins/chart.js/dist/Chart.min.js"></script>
     <script>
         function pretifyNumber(x) {
@@ -305,6 +325,7 @@
         }
 
         var total = @json($totalStats ?? '');
+        var restocked = @json($restocked ?? '');
 
         var randomScalingFactor = function() {
             return Math.round(Math.random()*100)
@@ -353,6 +374,38 @@
                     pointRadius: 2,
                     borderWidth: 2,
                     data: historicalData['revenue'],
+                    fill: false,
+                    yAxisID: 'revenue-axis',
+                },{
+                    label: 'Transakcje',
+                    borderColor: COLOR_PINK,
+                    pointBackgroundColor: COLOR_PINK,
+                    pointRadius: 2,
+                    borderWidth: 2,
+                    hidden: true,
+                    data: historicalData['transactions'],
+                    fill: false,
+                    yAxisID: 'revenue-axis',
+                }]
+            };
+            var transactionCensuredChartData = {
+                labels: historicalData['date'],
+                datasets: [{
+                    label: 'Sprzedane sztuki',
+                    borderColor: COLOR_BLACK,
+                    pointBackgroundColor: COLOR_BLACK,
+                    pointRadius: 2,
+                    borderWidth: 2,
+                    data: historicalData['censured']['units_sold'],
+                    fill: false,
+                    yAxisID: 'units-axis',
+                },{
+                    label: 'Obrót',
+                    borderColor: COLOR_ORANGE,
+                    pointBackgroundColor: COLOR_ORANGE,
+                    pointRadius: 2,
+                    borderWidth: 2,
+                    data: historicalData['censured']['revenue'],
                     fill: false,
                     yAxisID: 'revenue-axis',
                 },{
@@ -428,8 +481,19 @@
                 $('#daterange-prev-date').html(moment(start).subtract('days', gap).format('D MMMM') + ' - ' + moment(start).subtract('days', 1).format('D MMMM YYYY'));
             });
         };
+        var transactionsChart;
+
+        function f() {
+            if(restocked) {
+                if (Cookies.get('deleteInaccurateData') == 'true') {
+                    return transactionCensuredChartData;
+                } else return transactionChartData;
+            }else return transactionChartData;
+        }
+
         var handleChartJs = function(){
             @if(isset($historicalData))
+
                 var ctx = document.getElementById('price-chart').getContext('2d');
 
                 var offerHistoryChart = new Chart(ctx, {
@@ -458,9 +522,9 @@
                     }
                 });
                 var ptx = document.getElementById('transactions-chart').getContext('2d');
-                var transactionsChart = new Chart(ptx, {
+                transactionsChart = new Chart(ptx, {
                     type: 'line',
-                    data: transactionChartData,
+                    data: f(),
                     options:{
                         tooltips:{
                             mode: 'index',
@@ -503,8 +567,29 @@
         }();
 
         $(document).ready(function() {
+            if(restocked){
+                if (Cookies.get('deleteInaccurateData') == 'true') {
+                    $("#customSwitch1").attr("checked", true);
+                }
+            }
             Offers.init();
         });
+
+        if(restocked) {
+            $("#customSwitch1").change(function () {
+                var attr = $(this).attr('deleteInaccurateData');
+
+                if (this.checked) {
+                    Cookies.set('deleteInaccurateData', true, {expires: 7});
+                    transactionsChart.data = transactionCensuredChartData;
+                    transactionsChart.update();
+                } else {
+                    Cookies.set('deleteInaccurateData', false, {expires: 7});
+                    transactionsChart.data = transactionChartData;
+                    transactionsChart.update();
+                }
+            });
+        }
 
         $("form").submit(function( event ) {
             $('#loading-spinner').removeClass('hide-img');
@@ -516,6 +601,16 @@
             // c = b.getElementById("eecardrcm4gv1");
             // c.dispatchEvent(new Event('click'));
         });
+
+        $("#auctionNumber").bind("paste", function(e){
+            // access the clipboard using the api
+            var pastedData = e.originalEvent.clipboardData.getData('text');
+            var re = /[0-9]{10}/g;
+            var number = re.exec(pastedData);
+            $("#auctionNumber").val(number);
+            e.preventDefault();
+        } );
+
     </script>
 @endpush
 
