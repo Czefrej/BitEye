@@ -21,9 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d83fb2d9-13ae-4b82-8454-9f3b8b0a65c3" name="Default Changelist" comment="Started offer page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OfferController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OfferController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/offers.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/offers.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -237,7 +234,7 @@
       <workItem from="1606909663502" duration="7064000" />
       <workItem from="1606995286736" duration="13253000" />
       <workItem from="1607074196373" duration="15820000" />
-      <workItem from="1607353954922" duration="11289000" />
+      <workItem from="1607353954922" duration="11802000" />
     </task>
     <servers />
   </component>

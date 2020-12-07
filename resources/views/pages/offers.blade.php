@@ -562,6 +562,15 @@
                 init: function () {
                     handleDateRangeFilter();
                     handleChartJs();
+
+                    $("#auctionNumber").bind("paste", function(e){
+                        // access the clipboard using the api
+                        var pastedData = e.originalEvent.clipboardData.getData('text');
+                        var re = /[0-9]{10}/g;
+                        var number = re.exec(pastedData);
+                        $("#auctionNumber").val(number);
+                        e.preventDefault();
+                    } );
                 }
             };
         }();
@@ -602,14 +611,6 @@
             // c.dispatchEvent(new Event('click'));
         });
 
-        $("#auctionNumber").bind("paste", function(e){
-            // access the clipboard using the api
-            var pastedData = e.originalEvent.clipboardData.getData('text');
-            var re = /[0-9]{10}/g;
-            var number = re.exec(pastedData);
-            $("#auctionNumber").val(number);
-            e.preventDefault();
-        } );
 
     </script>
 @endpush
