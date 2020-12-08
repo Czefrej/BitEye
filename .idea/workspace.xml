@@ -20,30 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d83fb2d9-13ae-4b82-8454-9f3b8b0a65c3" name="Default Changelist" comment="Started offer page">
-      <change afterPath="$PROJECT_DIR$/app/Exceptions/NotEnoughDataException.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/en/password-reset-form.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/en/recover-password-form.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/pl/password-reset-form.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/pl/recover-password-form.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/forgot-password.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/password-reset.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/biteye.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ForgotPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/ForgotPasswordController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OfferController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OfferController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/sidebar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/login-form.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/login-form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/offer.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/offer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/registration-form.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/registration-form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/pl/login-form.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/pl/login-form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/pl/offer.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/pl/offer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/pl/registration-form.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/pl/registration-form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login-new.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login-new.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/includes/component/theme-panel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/includes/component/theme-panel.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/includes/head.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/includes/head.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/includes/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/includes/header.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/html/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vendor/mail/html/header.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,8 +194,8 @@
       <recent name="C:\Users\Wiktor\PhpstormProjects\BitEye\resources\views\auth" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Wiktor\PhpstormProjects\BitEye\app\Http\Controllers\Auth" />
       <recent name="C:\Users\Wiktor\PhpstormProjects\BitEye\public\assets" />
+      <recent name="C:\Users\Wiktor\PhpstormProjects\BitEye\app\Http\Controllers\Auth" />
       <recent name="C:\Users\Wiktor\PhpstormProjects\BitEye\public" />
       <recent name="C:\Users\Wiktor\PhpstormProjects\BitEye\public\assets\img" />
       <recent name="C:\Users\Wiktor\PhpstormProjects\BitEye\resources\views\errors" />
@@ -265,7 +244,7 @@
       <workItem from="1606995286736" duration="13253000" />
       <workItem from="1607074196373" duration="15820000" />
       <workItem from="1607353954922" duration="13429000" />
-      <workItem from="1607416216666" duration="10212000" />
+      <workItem from="1607416216666" duration="12287000" />
     </task>
     <servers />
   </component>
