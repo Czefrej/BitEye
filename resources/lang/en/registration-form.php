@@ -3,7 +3,7 @@ $year = date("Y");
 return [
     'title'=>'Sign Up',
     'header'=>'Sign Up',
-    'register-header'=>'Create your BitEye Account.',
+    'reset-header'=>'Create your BitEye Account.',
     'name-label'=>'Username',
     'name-placeholder'=>'Enter username',
     'email-label'=>'Email',

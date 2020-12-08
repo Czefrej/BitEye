@@ -23,7 +23,8 @@ Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controller
 Route::group(['prefix' => 'app', 'middleware' => ['auth']],function (){
 
     Route::get('/',function (){
-        return view('pages.dashboard-v3');
+        return redirect("/app/offer");
+        #return view('pages.dashboard-v3');
     })->name("app");
 
     Route::group(['prefix' => 'offer', 'middleware' => ['auth','verified']],function () {
@@ -77,6 +78,11 @@ Route::get('login', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->
 Route::post('login', 'App\Http\Controllers\Auth\LoginController@login');
 Route::post('logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
+Route::get('forgot', 'App\Http\Controllers\Auth\ForgotPasswordController@showPasswordRecoveryForm')->name('forgot');
+Route::post('password/email', 'App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'App\Http\Controllers\Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'App\Http\Controllers\Auth\ResetPasswordController@reset')->name('password.update');
+
 Route::get('register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'App\Http\Controllers\Auth\RegisterController@register');
 
@@ -110,11 +116,8 @@ Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->na
 
 
 //DELETE LATER
-Route::get('/input',function (){
-    return view('pages.input');
-});
-
-Route::post('/save', 'App\Http\Controllers\APIController@store');
-Route::get('test', function () {
-    Mail::to('tavrosteam@gmail.com')->send(new TestAmazonSes('It works!'));
-});
+//Route::get('/input',function (){
+//    return view('pages.input');
+//});
+//
+//Route::post('/save', 'App\Http\Controllers\APIController@store');

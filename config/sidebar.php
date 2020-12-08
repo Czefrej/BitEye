@@ -12,12 +12,13 @@ return [
     | the usual Laravel view path has already been registered for you.
     |
     */
-  'menu' => [[
-      'icon' => 'fa fa-th-large',
-      'title' => 'Dashboard',
-      'url' => '/app/',
-      'caret' => false,
-  ],
+  'menu' => [
+//      [
+//      'icon' => 'fa fa-th-large',
+//      'title' => 'Dashboard',
+//      'url' => '/app/',
+//      'caret' => false,
+//  ],
 //      [
 //      'icon' => 'fa fa-chart-bar',
 //      'title' => 'Raporty',
@@ -32,16 +33,16 @@ return [
       'icon' => 'fa fa-hdd',
       'title' => 'Aukcje',
       'url' => '/app/offer'
-  ],
-//      [
-//		'icon' => 'fa fa-user',
-//		'title' => 'Sprzedawcy',
-//		'url' => 'javascript:;'
-//	],
+  ],[
+    'icon' => 'fa fa-user',
+    'title' => 'Sprzedawcy',
+          'label' => 'Wkrótce',
+		'url' => 'javascript:;'
+	],
       [
 		'icon' => 'fa fa-rocket',
 		'title' => 'API',
 		'label' => 'Wkrótce',
-		'url' => '/widget'
+		'url' => 'javascript:;'
 	]]
 ];

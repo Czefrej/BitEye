@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\NotEnoughDataException;
 use App\Models\Offer;
 use App\Models\Seller;
 use App\Models\SellerChange;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
+use mysql_xdevapi\Exception;
 
 
 class OfferController extends Controller
@@ -91,30 +93,32 @@ class OfferController extends Controller
                             ->where('offer_change.offer_id',"=",$id)->orderBy("date","asc")
                             ->get();
                         $offerData = array();
-                        $i =-1;
+                        if($offerHistory->count()>1) {
+                            $i = -1;
 
-                        $restocked = false;
-                        foreach ($offerHistory as $row){
-                            if($i >= 0) {
-                                $offerData["price"][$i] = $row->price;
-                                $offerData["stock"][$i] = $row->stock;
-                                if($row->units < 0){
-                                    $restocked = true;
-                                    $offerData["units_sold"][$i] = 0;
-                                    $offerData["revenue"][$i] = 0;
-                                    $offerData['censured']["revenue"][$i] = null;
-                                    $offerData['censured']["units_sold"][$i] = null;
-                                }else{
-                                    $offerData["units_sold"][$i] = $row->units;
-                                    $offerData["revenue"][$i] = $row->revenue;
-                                    $offerData['censured']["revenue"][$i] = $row->revenue;
-                                    $offerData['censured']["units_sold"][$i] = $row->units;
+                            $restocked = false;
+                            foreach ($offerHistory as $row) {
+                                if ($i >= 0) {
+                                    $offerData["price"][$i] = $row->price;
+                                    $offerData["stock"][$i] = $row->stock;
+                                    if ($row->units < 0) {
+                                        $restocked = true;
+                                        $offerData["units_sold"][$i] = 0;
+                                        $offerData["revenue"][$i] = 0;
+                                        $offerData['censured']["revenue"][$i] = null;
+                                        $offerData['censured']["units_sold"][$i] = null;
+                                    } else {
+                                        $offerData["units_sold"][$i] = $row->units;
+                                        $offerData["revenue"][$i] = $row->revenue;
+                                        $offerData['censured']["revenue"][$i] = $row->revenue;
+                                        $offerData['censured']["units_sold"][$i] = $row->revenue;
+                                    }
+                                    $offerData['date'][$i] = $row->date;
+                                    $offerData['transactions'][$i] = $row->transactions;
                                 }
-                                $offerData['date'][$i] = $row->date;
-                                $offerData['transactions'][$i] = $row->transactions;
+                                $i++;
                             }
-                            $i++;
-                        }
+                        }else throw new NotEnoughDataException("Not enough data");
 
 //                        $offerHistory = OfferChange::select(["price", "stock", "transactions", "creation_date",DB::raw("Date(creation_date) as creation_day")])
 //                            ->where(DB::Raw('DATE(creation_date)'), '>=', "$fromDate")
@@ -152,6 +156,10 @@ class OfferController extends Controller
                 } catch (ModelNotFoundException $e) {
                     $messageBag = new MessageBag;
                     $messageBag->add(0,__("offer.notFound"));
+                    return redirect(route("offer.index"))->with(["errors" => $messageBag]);
+                } catch (NotEnoughDataException $e){
+                    $messageBag = new MessageBag;
+                    $messageBag->add(0,__("offer.notEnoughData"));
                     return redirect(route("offer.index"))->with(["errors" => $messageBag]);
                 }
             } else {
