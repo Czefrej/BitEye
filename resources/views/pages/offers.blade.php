@@ -313,7 +313,6 @@
 	<script src="/assets/plugins/jvectormap-next/jquery-jvectormap-world-mill.js"></script>
     <script src="/assets/plugins/moment/moment.js"></script>
     <script src="/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <script src="/assets/plugins/chart.js/dist/Chart.min.js"></script>
     <script>
         function pretifyNumber(x) {
@@ -590,14 +589,24 @@
 
                 if (this.checked) {
                     Cookies.set('deleteInaccurateData', true, {expires: 7});
-                    transactionsChart.data = transactionCensuredChartData;
-                    transactionsChart.update();
+                    reloadTransactionData();
                 } else {
                     Cookies.set('deleteInaccurateData', false, {expires: 7});
-                    transactionsChart.data = transactionChartData;
-                    transactionsChart.update();
+                    reloadTransactionData();
                 }
             });
+        }
+
+
+        function reloadTransactionData(){
+            if(Cookies.get('deleteInaccurateData')) {
+                if (Cookies.get('deleteInaccurateData') == 'true') {
+                    transactionsChart.data = transactionCensuredChartData;
+                } else {
+                    transactionsChart.data = transactionChartData;
+                }
+                transactionsChart.update();
+            }
         }
 
         $("form").submit(function( event ) {
@@ -605,10 +614,6 @@
             $('#submit-button').addClass('hide-img');
             $('#date-input').addClass('hide-img');
             $('#offer-input').addClass('hide-img');
-            // a = document.getElementById("animated-svg");
-            // b = a.contentDocument
-            // c = b.getElementById("eecardrcm4gv1");
-            // c.dispatchEvent(new Event('click'));
         });
 
 

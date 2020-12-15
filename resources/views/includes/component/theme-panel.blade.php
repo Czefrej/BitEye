@@ -9,33 +9,19 @@
 			<div class="col-8 control-label text-inverse f-w-600">Filtruj niepoprawne dane</div>
 			<div class="col-4 d-flex">
 				<div class="custom-control custom-switch ml-auto">
-					<input type="checkbox" class="custom-control-input" name="header-fixed" id="headerFixed" value="1" checked />
-					<label class="custom-control-label" for="headerFixed">&nbsp;</label>
+					<input type="checkbox" class="custom-control-input" name="settingsFilterData" id="settingsFilterData"/>
+					<label class="custom-control-label" for="settingsFilterData">&nbsp;</label>
 				</div>
 			</div>
 		</div>
 		<div class="divider"></div>
 		<h5>Język</h5>
         <div class="row m-t-10">
-            <div class="col-8 control-label text-inverse f-w-600">Polski</div>
-            <div class="col-4 d-flex">
-                <div class="custom-control custom-switch ml-auto">
-                    <a href="/app/">
-                        <input type="checkbox" class="custom-control-input" name="lang-pl" id="lang-pl" value="1" checked />
-                        <label class="custom-control-label" for="lang-pl">&nbsp;</label>
-                    </a>
-                </div>
-            </div>
-            <div class="col-8 control-label text-inverse f-w-600">English</div>
-            <div class="col-4 d-flex">
-                <div class="custom-control custom-switch ml-auto">
-                    <a href="/app/">
-                        <input type="checkbox" class="custom-control-input" name="lang-pl" id="lang-en" value="1" checked />
-                        <label class="custom-control-label" for="lang-en">&nbsp;</label>
-                    </a>
-
-                </div>
-            </div>
+            @if(app()->getLocale() == "pl")
+                <a href="/lang/en" class="btn btn-default btn-block btn-rounded"><b>English</b></a>
+            @else
+                <a href="/lang/pl" class="btn btn-default btn-block btn-rounded"><b>Polski</b></a>
+            @endif
         </div>
 		<div class="divider"></div>
 {{--		<div class="row m-t-10">--}}
@@ -46,4 +32,7 @@
 {{--		</div>--}}
 	</div>
 </div>
+
+
+
 <!-- end theme-panel -->

@@ -11,4 +11,5 @@
 <link href="/assets/plugins/flag-icon-css/css/flag-icon.css" rel="stylesheet"/>
 <!-- ================== END BASE CSS STYLE ================== -->
 
+
 @stack('css')

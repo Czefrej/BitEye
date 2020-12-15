@@ -93,31 +93,3 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     return view('auth.verify-success');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
-/*
-// Password Reset Routes...
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
-
-// Confirm Password (added in v6.2)
-Route::get('password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
-Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm');
-
-
-
-// Email Verification Routes...
-Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
-Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('verification.verify'); // v6.x
-*//* Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify'); // v5.x */
-//Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
-//DELETE LATER
-//Route::get('/input',function (){
-//    return view('pages.input');
-//});
-//
-//Route::post('/save', 'App\Http\Controllers\APIController@store');
