@@ -27,6 +27,10 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth']],function (){
         #return view('pages.dashboard-v3');
     })->name("app");
 
+    Route::get('/account',function (){
+        return view('pages.my-account');
+    })->name("account");
+
     Route::group(['prefix' => 'offer', 'middleware' => ['auth','verified']],function () {
 
         Route::get('/', function () {

@@ -21,9 +21,10 @@
 			</li>
 			<li>
 				<ul class="nav nav-profile">
-					<li><a href="javascript:;"><i class="fa fa-cog"></i> Settings</a></li>
-					<li><a href="javascript:;"><i class="fa fa-pencil-alt"></i> Send Feedback</a></li>
-					<li><a href="javascript:;"><i class="fa fa-question-circle"></i> Helps</a></li>
+                    <li><a href="{{route("account")}}"><i class="fa fa-user-cog"></i> Moje konto</a></li>
+					<li><a href="javascript:;" data-click="theme-panel-expand"><i class="fa fa-cog"></i> Settings</a></li>
+{{--					<li><a href="javascript:;"><i class="fa fa-pencil-alt"></i> Send Feedback</a></li>--}}
+{{--					<li><a href="javascript:;"><i class="fa fa-question-circle"></i> Helps</a></li>--}}
 				</ul>
 			</li>
 		</ul>
