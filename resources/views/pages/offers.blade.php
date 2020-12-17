@@ -143,7 +143,20 @@
                             </div>
                             <div class="text-center col-xl-6">
                                 <div class="text-gray text-right col-xl-12 mb-5">
-                                    <small>Supermarket  /  Artykuły dla zwierząt  / Dla kotów  /  Karmy  /  {{$category['name']}} ({{$category['id']}})</small>
+                                    <small>
+                                    @php
+                                        $i = 0;
+                                    @endphp
+                                    @foreach($category_path as $cat)
+                                            @php($i++)
+                                            @if($i < sizeof($category_path))
+                                                {{$cat['name']}} /
+                                            @else
+                                                <b>{{$cat['name']}}</b>
+                                            @endif
+
+                                    @endforeach
+                                    </small>
                                 </div>
                                 <div>
                                     <h4>{{$offer->name}}</h4>

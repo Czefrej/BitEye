@@ -85,6 +85,16 @@ class OfferController extends Controller
                         ->where("offer_id","=","?")
                         ->setBindings([$category_id,$id])->firstOrFail();
                     $category = $offer->category;
+
+                    $category_path[0] = array("id"=>$category->id,"name"=>$category->name);
+
+                    $next = $category->parent()->get()->first();
+                    while($next != null){
+                        $category_path[sizeof($category_path)] = array("id"=>$next->id,"name"=>$next->name);
+                        $next = $next->parent()->get()->first();
+                    }
+                    $category_path = array_reverse($category_path);
+
                     if($fromDate != null && $toDate != null) {
 
                         $offerHistory = OfferChange::selectRaw("transactions,price,stock,NVL(lag(offer_change.stock) over (order by offer_change.creation_date) - offer_change.stock, 0) as units,units*price as revenue,offer_change.creation_date as date")
@@ -140,7 +150,7 @@ class OfferController extends Controller
 
                         return view('pages.offers', ['offer' => $offer,
                             'seller' => $sellerDetails, 'offerDetails' => $offerDetails,
-                            'category' => $category, 'history' => $offerHistory,
+                            'category_path' => $category_path, 'history' => $offerHistory,
                             'fromDate'=>$fromDate,'toDate'=>$toDate,
                             'historicalData'=>$offerData,'totalStats'=>$totalStats,'restocked'=>$restocked]);
                     }else{
