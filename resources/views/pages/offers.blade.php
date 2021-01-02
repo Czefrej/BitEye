@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', 'Dashboard V1')
+@section('title', 'Wyszukiwarka aukcji')
 
 @push('css')
 	<link href="/assets/plugins/jvectormap-next/jquery-jvectormap.css" rel="stylesheet" />
@@ -268,7 +268,6 @@
                             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
                             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
                             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
                         </div>
                     </div>
                     <div class="panel-body">
@@ -287,7 +286,6 @@
                             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
                             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
                             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
                         </div>
                     </div>
                     <div class="panel-body">
@@ -328,6 +326,17 @@
     <script src="/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
     <script src="/assets/plugins/chart.js/dist/Chart.min.js"></script>
     <script>
+        function showTooltip(index) {
+            if (Array.isArray(charts) && charts.length) {
+                for (var i = 0; i < charts.length; i++) {
+                    var segment = charts[i].getDatasetMeta(0).data[index];
+                    charts[i].tooltip._active = [segment];
+                    charts[i].tooltip.update(true);
+                    charts[i].draw();
+                }
+            }
+        }
+
         function pretifyNumber(x) {
             x = x.toString();
             var pattern = /(-?\d+)(\d{3})/;
@@ -338,6 +347,7 @@
 
         var total = @json($totalStats ?? '');
         var restocked = @json($restocked ?? '');
+        var charts = [];
 
         var randomScalingFactor = function() {
             return Math.round(Math.random()*100)
@@ -366,6 +376,16 @@
                     data: historicalData['stock'],
                     yAxisID: 'stock-axis',
                     fill: false
+                },{
+                        label: 'Transakcje',
+                        borderColor: COLOR_PINK,
+                        pointBackgroundColor: COLOR_PINK,
+                        pointRadius: 2,
+                        borderWidth: 2,
+                        hidden: true,
+                        data: historicalData['transactions'],
+                        yAxisID: 'stock-axis',
+                        fill: false
                 }]
             };
             var transactionChartData = {
@@ -389,15 +409,24 @@
                     fill: false,
                     yAxisID: 'revenue-axis',
                 },{
-                    label: 'Transakcje',
-                    borderColor: COLOR_PINK,
-                    pointBackgroundColor: COLOR_PINK,
+                    label: 'Przyrost transakcji od poprzedniego miesiąca',
+                    borderColor: function(context) {
+                        var index = context.dataIndex;
+                        var value = context.dataset.data[index];
+                        return value < 0 ? COLOR_RED_TRANSPARENT_6 : COLOR_GREEN_TRANSPARENT_6;
+                    },
+                    backgroundColor: function(context) {
+                        var index = context.dataIndex;
+                        var value = context.dataset.data[index];
+                        return value < 0 ? COLOR_RED_TRANSPARENT_6 : COLOR_GREEN_TRANSPARENT_6;
+                    },
                     pointRadius: 2,
                     borderWidth: 2,
                     hidden: true,
-                    data: historicalData['transactions'],
+                    data: historicalData['transactions_change'],
                     fill: false,
-                    yAxisID: 'revenue-axis',
+                    yAxisID: 'units-axis',
+                    type: 'bar'
                 }]
             };
             var transactionCensuredChartData = {
@@ -421,15 +450,24 @@
                     fill: false,
                     yAxisID: 'revenue-axis',
                 },{
-                    label: 'Transakcje',
-                    borderColor: COLOR_PINK,
-                    pointBackgroundColor: COLOR_PINK,
+                    label: 'Przyrost transakcji od poprzedniego miesiąca',
+                    borderColor: function(context) {
+                        var index = context.dataIndex;
+                        var value = context.dataset.data[index];
+                        return value < 0 ? COLOR_RED_TRANSPARENT_6 : COLOR_GREEN_TRANSPARENT_6;
+                    },
+                    backgroundColor: function(context) {
+                        var index = context.dataIndex;
+                        var value = context.dataset.data[index];
+                        return value < 0 ? COLOR_RED_TRANSPARENT_6 : COLOR_GREEN_TRANSPARENT_6;
+                    },
                     pointRadius: 2,
                     borderWidth: 2,
                     hidden: true,
-                    data: historicalData['transactions'],
+                    data: historicalData['transactions_change'],
                     fill: false,
-                    yAxisID: 'revenue-axis',
+                    yAxisID: 'units-axis',
+                    type: 'bar'
                 }]
             };
         @endif
@@ -454,7 +492,7 @@
                 @endif
                 minDate: '2020-01-10',
                 maxDate: moment(),
-                dateLimit: { days: 60 },
+                dateLimit: { days: 120 },
                 showDropdowns: true,
                 showWeekNumbers: true,
                 timePicker: false,
@@ -509,12 +547,12 @@
                 var ctx = document.getElementById('price-chart').getContext('2d');
 
                 var offerHistoryChart = new Chart(ctx, {
-                    type: 'line',
+                    type: 'LineWithLine',
                     data: offerHistoryChartData,
                     options:{
                         tooltips:{
                           mode: 'index',
-                          intersect: true
+                          intersect: false
                         },
                         hover:{
                             mode: 'index',
@@ -533,19 +571,21 @@
                         }
                     }
                 });
+
                 var ptx = document.getElementById('transactions-chart').getContext('2d');
-                transactionsChart = new Chart(ptx, {
-                    type: 'line',
+                var transactionsChart = new Chart(ptx, {
+                    type: 'LineWithLine',
                     data: f(),
                     options:{
                         tooltips:{
                             mode: 'index',
-                            intersect: true
+                            intersect: false
                         },
                         hover:{
                             mode: 'index',
                             intersect: true
                         },
+
                         title:{
                             display: true,
                             text: 'Całkowita wartość sprzedaży: '+ pretifyNumber(Math.round(total['revenue']*1000)/1000)+ ' zł'
@@ -563,7 +603,8 @@
                         }
                     }
                 });
-
+                charts.push(offerHistoryChart)
+                charts.push(transactionsChart);
             @endif
         };
 
@@ -572,6 +613,32 @@
             return {
                 //main function
                 init: function () {
+                    Chart.defaults.LineWithLine = Chart.defaults.line;
+                    Chart.controllers.LineWithLine = Chart.controllers.line.extend({
+                        draw: function(ease) {
+                            Chart.controllers.line.prototype.draw.call(this, ease);
+
+                            if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
+                                var activePoint = this.chart.tooltip._active[0],
+                                    ctx = this.chart.ctx,
+                                    x = activePoint.tooltipPosition().x,
+                                    topY = this.chart.legend.bottom,
+                                    bottomY = this.chart.chartArea.bottom;
+
+                                // draw line
+                                ctx.save();
+                                ctx.beginPath();
+                                ctx.moveTo(x, topY);
+                                ctx.lineTo(x, bottomY);
+                                ctx.lineWidth = 1;
+                                ctx.strokeStyle = '#808080';
+                                ctx.stroke();
+                                ctx.restore();
+
+                            }
+                        }
+                    });
+
                     handleDateRangeFilter();
                     handleChartJs();
 
@@ -583,6 +650,7 @@
                         $("#auctionNumber").val(number);
                         e.preventDefault();
                     } );
+
                 }
             };
         }();

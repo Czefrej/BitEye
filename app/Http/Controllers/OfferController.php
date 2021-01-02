@@ -97,36 +97,41 @@ class OfferController extends Controller
 
                     if($fromDate != null && $toDate != null) {
 
-                        $offerHistory = OfferChange::selectRaw("transactions,price,stock,NVL(lag(offer_change.stock) over (order by offer_change.creation_date) - offer_change.stock, 0) as units,units*price as revenue,offer_change.creation_date as date")
-                            ->where('date', '>=', DB::Raw("dateadd(day,-1,'$fromDate')"))
+                        $offerHistory = OfferChange::selectRaw("transactions,price,stock,NVL(lag(offer_change.stock) over (order by offer_change.creation_date) - offer_change.stock, 0) as units,
+                        (offer_change.transactions - lag(offer_change.transactions,30) over (order by offer_change.creation_date)) as transactionsChange,units*price as revenue,offer_change.creation_date as date")
+                            ->where('date', '>=', DB::Raw("dateadd(month,-1,dateadd(day,-1,'$fromDate'))"))
                             ->where('date', '<=', "$toDate")
                             ->where('offer_change.offer_id',"=",$id)->orderBy("date","asc")
                             ->get();
                         $offerData = array();
+                        $beginDate = date('Y-m-d', strtotime('-1 day', strtotime($fromDate)));
                         if($offerHistory->count()>1) {
                             $i = -1;
 
                             $restocked = false;
                             foreach ($offerHistory as $row) {
-                                if ($i >= 0) {
-                                    $offerData["price"][$i] = $row->price;
-                                    $offerData["stock"][$i] = $row->stock;
-                                    if ($row->units < 0) {
-                                        $restocked = true;
-                                        $offerData["units_sold"][$i] = 0;
-                                        $offerData["revenue"][$i] = 0;
-                                        $offerData['censured']["revenue"][$i] = null;
-                                        $offerData['censured']["units_sold"][$i] = null;
-                                    } else {
-                                        $offerData["units_sold"][$i] = $row->units;
-                                        $offerData["revenue"][$i] = $row->revenue;
-                                        $offerData['censured']["revenue"][$i] = $row->revenue;
-                                        $offerData['censured']["units_sold"][$i] = $row->revenue;
+                                if($row->date >= $beginDate) {
+                                    if ($i >= 0) {
+                                        $offerData["price"][$i] = $row->price;
+                                        $offerData["stock"][$i] = $row->stock;
+                                        if ($row->units < 0) {
+                                            $restocked = true;
+                                            $offerData["units_sold"][$i] = 0;
+                                            $offerData["revenue"][$i] = 0;
+                                            $offerData['censured']["revenue"][$i] = null;
+                                            $offerData['censured']["units_sold"][$i] = null;
+                                        } else {
+                                            $offerData["units_sold"][$i] = $row->units;
+                                            $offerData["revenue"][$i] = $row->revenue;
+                                            $offerData['censured']["revenue"][$i] = $row->revenue;
+                                            $offerData['censured']["units_sold"][$i] = $row->revenue;
+                                        }
+                                        $offerData['date'][$i] = $row->date;
+                                        $offerData['transactions'][$i] = $row->transactions;
+                                        $offerData['transactions_change'][$i] = $row->transactionschange;
                                     }
-                                    $offerData['date'][$i] = $row->date;
-                                    $offerData['transactions'][$i] = $row->transactions;
+                                    $i++;
                                 }
-                                $i++;
                             }
                         }else throw new NotEnoughDataException("Not enough data");
 
