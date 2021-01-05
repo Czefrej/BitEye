@@ -2,7 +2,7 @@
 return [
     "free"=>[
         "search"=>[
-            "availableHistory"=>7+1+30
+            "availableHistory"=>7+1+30+30
         ]
     ],
     "silver"=>[

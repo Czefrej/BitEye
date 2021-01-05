@@ -15,7 +15,7 @@
 					<div class="info">
 						<b class="caret pull-right"></b>
                         {{ Auth::user()->name }}
-                        <small>{{ Auth::user()->type }} @if(Auth::user()->type == "free")- ulepsz @endif</small>
+                        <small>Twój plan: {{ Auth::user()->type }}</small>
 					</div>
 				</a>
 			</li>

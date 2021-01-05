@@ -185,11 +185,11 @@
                                             <div class="col-xl-8">
                                                 <h3>{{number_format($offerDetails['price'],2)}} zł
                                                     <small>
-                                                        Dostawa od {{number_format($offerDetails['lowest_delivery_price'],2)}} zł
+{{--                                                        Dostawa od {{number_format($offerDetails['lowest_delivery_price'],2)}} zł--}}
                                                     </small>
-                                                    @if($offerDetails['free_delivery'])
-                                                        Darmowa dostawa
-                                                    @endif
+{{--                                                    @if($offerDetails['free_delivery'])--}}
+{{--                                                        Darmowa dostawa--}}
+{{--                                                    @endif--}}
                                                 </h3>
                                                 <p class="text-gray">{{$offerDetails['transactions']}} osób kupiło</p>
                                             </div>
@@ -588,7 +588,9 @@
 
                         title:{
                             display: true,
-                            text: 'Całkowita wartość sprzedaży: '+ pretifyNumber(Math.round(total['revenue']*1000)/1000)+ ' zł'
+                            text: [
+                                'Szacunkowa całkowita wartość sprzedaży: '+ pretifyNumber(Math.round(total['revenue']*1000)/1000)+ ' zł'
+                                ,'Szacunkowy wolumen sprzedaży: '+ total['units_sold'] +' sztuk']
                         },
                         scales:{
                             yAxes:[{

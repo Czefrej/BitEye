@@ -20,18 +20,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d83fb2d9-13ae-4b82-8454-9f3b8b0a65c3" name="Default Changelist" comment="Started offer page">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/SellerController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/pages/sellers.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OfferController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OfferController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/SubscriptionPlan.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/SubscriptionPlan.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/languages.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/languages.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/logging.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/logging.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Seller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Seller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/sidebar.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/subscription_plans.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/subscription_plans.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/pl/offer.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/pl/offer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/includes/component/theme-panel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/includes/component/theme-panel.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/includes/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/includes/sidebar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/offers.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/offers.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -260,7 +259,11 @@
       <workItem from="1608105229527" duration="7000000" />
       <workItem from="1608217402932" duration="3515000" />
       <workItem from="1609512446557" duration="4138000" />
-      <workItem from="1609587069533" duration="10858000" />
+      <workItem from="1609587069533" duration="11043000" />
+      <workItem from="1609601246589" duration="4329000" />
+      <workItem from="1609678915224" duration="6661000" />
+      <workItem from="1609749490523" duration="11029000" />
+      <workItem from="1609837860366" duration="6105000" />
     </task>
     <servers />
   </component>
@@ -303,10 +306,10 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="703" y="342" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1858.1080@0.0.1858.1080" timestamp="1601902593270" />
-    <state x="-1274" y="295" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1609513885299">
+    <state x="-1274" y="295" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1609683037660">
       <screen x="-1920" y="0" width="1822" height="1080" />
     </state>
-    <state x="-1274" y="295" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/-1920.0.1822.1080/0.0.1970.1152@-1920.0.1822.1080" timestamp="1609513885299" />
+    <state x="-1274" y="295" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/-1920.0.1822.1080/0.0.1970.1152@-1920.0.1822.1080" timestamp="1609683037660" />
     <state x="2646" y="304" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1858.1080/1920.0.2048.1112@1920.0.2048.1112" timestamp="1603456127491" />
     <state x="659" y="295" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1602248797344" />
     <state x="-1312" y="171" key="#phpunit.xml" timestamp="1607004866476">

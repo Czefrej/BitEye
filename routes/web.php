@@ -37,7 +37,20 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth']],function (){
             return view('pages.offers');
         })->name("offer.index");
         Route::post('/', 'App\Http\Controllers\OfferController@processForm')->name("offer.store");
-        Route::get('/{category_id}/{id}/{fromDate?}/{toDate?}', 'App\Http\Controllers\OfferController@show')->middleware("plan.eligible")->name("offer.show");
+        Route::get('/{category_id}/{id}/{fromDate}/{toDate}', 'App\Http\Controllers\OfferController@show')->middleware("plan.eligible")->name("offer.show");
+
+    });
+
+    Route::group(['prefix' => 'seller', 'middleware' => ['auth','verified']],function () {
+
+        Route::get('/', function () {
+            return view('pages.sellers');
+        })->name("seller.index");
+        Route::post('/', 'App\Http\Controllers\SellerController@processForm')->name("seller.store");
+        Route::get('/{id}/{fromDate?}/{toDate?}/{categories}', 'App\Http\Controllers\SellerController@show')
+            ->where('categories', '(.*)')
+            ->middleware("plan.eligible")
+            ->name("seller.show");
 
     });
 

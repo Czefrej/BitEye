@@ -19,6 +19,6 @@ class Seller extends Model
     }
 
     public function changes(){
-        return $this->hasMany("App\Models\SellerChange");
+        return $this->hasMany("App\Models\SellerChange",'seller_id','seller_id');
     }
 }

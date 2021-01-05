@@ -36,8 +36,7 @@ return [
   ],[
     'icon' => 'fa fa-user',
     'title' => 'Sprzedawcy',
-          'label' => 'Wkrótce',
-		'url' => 'javascript:;'
+    'url' => '/app/seller'
 	],
       [
 		'icon' => 'fa fa-rocket',

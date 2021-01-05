@@ -64,16 +64,13 @@ class OfferController extends Controller
      */
     public function show($category_id,$id,$fromDate = null, $toDate = null)
     {
-        if($fromDate == null && $toDate == null){
-            $data = array("auctionNumber"=>$id);
-        }else{
-            if($fromDate != null && $toDate != null)
-                $data = array("auctionNumber"=>$id,"daterange"=>$fromDate." - ".$toDate);
-            else{
-                $messageBag = new MessageBag;
-                $messageBag->add(0,__("offer.dateframe-required"));
-                return redirect(route("offer.index"))->with(["errors" => $messageBag]);
-            }
+
+        if($fromDate != null && $toDate != null)
+            $data = array("auctionNumber"=>$id,"daterange"=>$fromDate." - ".$toDate);
+        else{
+            $messageBag = new MessageBag;
+            $messageBag->add(0,__("offer.dateframe-required"));
+            return redirect(route("offer.index"))->with(["errors" => $messageBag]);
         }
 
         $validator = $this->validator($data);
@@ -95,78 +92,67 @@ class OfferController extends Controller
                     }
                     $category_path = array_reverse($category_path);
 
-                    if($fromDate != null && $toDate != null) {
+                    $offerHistory = OfferChange::selectRaw("transactions,price,stock,NVL(lag(offer_change.stock) over (order by offer_change.creation_date) - offer_change.stock, 0) as units,
+                    (offer_change.transactions - lag(offer_change.transactions,30) over (order by offer_change.creation_date)) as transactionsChange,units*price as revenue,offer_change.creation_date as date")
+                        ->where('date', '>=', DB::Raw("dateadd(month,-1,dateadd(day,-1,'$fromDate'))"))
+                        ->where('date', '<=', "$toDate")
+                        ->where('offer_change.offer_id',"=",$id)->orderBy("date","asc")
+                        ->get();
+                    $offerData = array();
+                    $beginDate = date('Y-m-d', strtotime('-1 day', strtotime($fromDate)));
+                    if($offerHistory->count()>1) {
+                        $i = -1;
 
-                        $offerHistory = OfferChange::selectRaw("transactions,price,stock,NVL(lag(offer_change.stock) over (order by offer_change.creation_date) - offer_change.stock, 0) as units,
-                        (offer_change.transactions - lag(offer_change.transactions,30) over (order by offer_change.creation_date)) as transactionsChange,units*price as revenue,offer_change.creation_date as date")
-                            ->where('date', '>=', DB::Raw("dateadd(month,-1,dateadd(day,-1,'$fromDate'))"))
-                            ->where('date', '<=', "$toDate")
-                            ->where('offer_change.offer_id',"=",$id)->orderBy("date","asc")
-                            ->get();
-                        $offerData = array();
-                        $beginDate = date('Y-m-d', strtotime('-1 day', strtotime($fromDate)));
-                        if($offerHistory->count()>1) {
-                            $i = -1;
-
-                            $restocked = false;
-                            foreach ($offerHistory as $row) {
-                                if($row->date >= $beginDate) {
-                                    if ($i >= 0) {
-                                        $offerData["price"][$i] = $row->price;
-                                        $offerData["stock"][$i] = $row->stock;
-                                        if ($row->units < 0) {
-                                            $restocked = true;
-                                            $offerData["units_sold"][$i] = 0;
-                                            $offerData["revenue"][$i] = 0;
-                                            $offerData['censured']["revenue"][$i] = null;
-                                            $offerData['censured']["units_sold"][$i] = null;
-                                        } else {
-                                            $offerData["units_sold"][$i] = $row->units;
-                                            $offerData["revenue"][$i] = $row->revenue;
-                                            $offerData['censured']["revenue"][$i] = $row->revenue;
-                                            $offerData['censured']["units_sold"][$i] = $row->revenue;
-                                        }
-                                        $offerData['date'][$i] = $row->date;
-                                        $offerData['transactions'][$i] = $row->transactions;
-                                        $offerData['transactions_change'][$i] = $row->transactionschange;
+                        $restocked = false;
+                        foreach ($offerHistory as $row) {
+                            if($row->date >= $beginDate) {
+                                if ($i >= 0) {
+                                    $offerData["price"][$i] = $row->price;
+                                    $offerData["stock"][$i] = $row->stock;
+                                    if ($row->units < 0) {
+                                        $restocked = true;
+                                        $offerData["units_sold"][$i] = 0;
+                                        $offerData["revenue"][$i] = 0;
+                                        $offerData['censured']["revenue"][$i] = null;
+                                        $offerData['censured']["units_sold"][$i] = null;
+                                    } else {
+                                        $offerData["units_sold"][$i] = $row->units;
+                                        $offerData["revenue"][$i] = $row->revenue;
+                                        $offerData['censured']["revenue"][$i] = $row->revenue;
+                                        $offerData['censured']["units_sold"][$i] = $row->revenue;
                                     }
-                                    $i++;
+                                    $offerData['date'][$i] = $row->date;
+                                    $offerData['transactions'][$i] = $row->transactions;
+                                    $offerData['transactions_change'][$i] = $row->transactionschange;
                                 }
+                                $i++;
                             }
-                        }else throw new NotEnoughDataException("Not enough data");
+                        }
+                    }else throw new NotEnoughDataException("Not enough data");
 
 //                        $offerHistory = OfferChange::select(["price", "stock", "transactions", "creation_date",DB::raw("Date(creation_date) as creation_day")])
 //                            ->where(DB::Raw('DATE(creation_date)'), '>=', "$fromDate")
 //                            ->where(DB::Raw('DATE(creation_date)'), '<=', "$toDate")
 //                            ->where("offer_id","=","$id")->get();
 //
-                        $sellerDetails = SellerHistoryService::getCurrentDetails($offer);
-                        $offerDetails = OfferHistoryService::getCurrentDetails($offer);
+                    $sellerDetails = SellerHistoryService::getCurrentDetails($offer);
+                    $offerDetails = OfferHistoryService::getCurrentDetails($offer);
 
-                        $totalStats = array();
-                        $totalStats['revenue'] = 0;
-                        $totalStats['units_sold'] = 0;
-                        for($i=0;$i<sizeof($offerData['date']);$i++){
-                            if($offerData['revenue'][$i]>=0)
-                                $totalStats['revenue'] += $offerData['revenue'][$i];
-                            if($offerData['revenue'][$i]>=0)
-                                $totalStats['units_sold'] += $offerData['units_sold'][$i];
-                        }
-
-                        return view('pages.offers', ['offer' => $offer,
-                            'seller' => $sellerDetails, 'offerDetails' => $offerDetails,
-                            'category_path' => $category_path, 'history' => $offerHistory,
-                            'fromDate'=>$fromDate,'toDate'=>$toDate,
-                            'historicalData'=>$offerData,'totalStats'=>$totalStats,'restocked'=>$restocked]);
-                    }else{
-                        $offerHistory = $offer->changes;
-                        $sellerDetails = SellerHistoryService::getCurrentDetails($offer);
-                        $offerDetails = OfferHistoryService::getCurrentDetails($offer);
-                        return view(
-                            'pages.offers', ['offer' => $offer,
-                            'seller' => $sellerDetails, 'offerDetails' => $offerDetails,
-                                'category' => $category, 'history' => $offerHistory]);
+                    $totalStats = array();
+                    $totalStats['revenue'] = 0;
+                    $totalStats['units_sold'] = 0;
+                    for($i=0;$i<sizeof($offerData['date']);$i++){
+                        if($offerData['revenue'][$i]>=0)
+                            $totalStats['revenue'] += $offerData['revenue'][$i];
+                        if($offerData['revenue'][$i]>=0)
+                            $totalStats['units_sold'] += $offerData['units_sold'][$i];
                     }
+
+                    return view('pages.offers', ['offer' => $offer,
+                        'seller' => $sellerDetails, 'offerDetails' => $offerDetails,
+                        'category_path' => $category_path, 'history' => $offerHistory,
+                        'fromDate'=>$fromDate,'toDate'=>$toDate,
+                        'historicalData'=>$offerData,'totalStats'=>$totalStats,'restocked'=>$restocked]);
 
                 } catch (ModelNotFoundException $e) {
                     $messageBag = new MessageBag;
