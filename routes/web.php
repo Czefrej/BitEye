@@ -87,7 +87,7 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth']],function (){
 Route::group(['prefix' => 'ajax', 'middleware' => ['auth']],function () {
     Route::group(['prefix' => 'category'],function () {
         Route::get('/', "App\Http\Controllers\AjaxCategoryController@index")->name("jstree");
-        Route::post('/{category_id}', "App\Http\Controllers\AjaxCategoryController@show");
+        Route::get('/{category_id}', "App\Http\Controllers\AjaxCategoryController@show");
     });
 
 });

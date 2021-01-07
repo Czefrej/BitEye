@@ -28,7 +28,7 @@ class AjaxCategoryController extends Controller
         $array = [];
 
         foreach ($categories as $c){
-            if($c['parent-id'] == 0)
+            if($c['parent-id'] == null || $c['parent-id'] == "")
                 $parent = "#";
             else{
                 $parent = $c['parent-id'];
